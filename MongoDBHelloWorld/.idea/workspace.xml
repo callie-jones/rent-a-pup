@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68cba521-aaf6-480e-ab4e-585ff02a45b6" name="Default" comment="added functions for user collection and pet collection">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/MongoDBHelloWorld.iml" afterPath="$PROJECT_DIR$/TestPuppy.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="68cba521-aaf6-480e-ab4e-585ff02a45b6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/kodejava/example/mongodb/TestPuppy.java" afterPath="$PROJECT_DIR$/src/main/java/org/kodejava/example/mongodb/TestPuppy.java" />
     </list>
     <ignored path="MongoDBHelloWorld.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -571,6 +567,14 @@
       <option name="presentableId" value="Default" />
       <updated>1490371123060</updated>
     </task>
+    <task id="LOCAL-00001" summary="added functions for user collection and pet collection">
+      <created>1490416447742</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1490416447742</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
