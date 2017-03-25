@@ -99,7 +99,7 @@ public class TestPuppy
             oldApt.put("name", name);
 
             BasicDBObject addApt = new BasicDBObject();
-            addApt.put("status", newApt);
+            addApt.put("apts", newApt);
 
             BasicDBObject updateDoc = new BasicDBObject();
             updateDoc.put("$set", addApt);
@@ -111,7 +111,7 @@ public class TestPuppy
         return "Failed";
     }
 
-    //stor user info to userData collection in db
+    //store user info to userData collection in db
     public static String addUser(String name, String email, String password){
         if(isConnected()){
             BasicDBObject doc = new BasicDBObject();
