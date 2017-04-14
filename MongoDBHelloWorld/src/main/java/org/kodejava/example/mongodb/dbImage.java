@@ -17,11 +17,14 @@ public class dbImage extends ReflectionDBObject {
 
     dbImage(String imagePathname) {
         File file = new File(imagePathname);
-        try {
+        try
+        {
             imageByteString = Base64.encode(FileUtils.readFileToByteArray(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-            imageByteString = null;
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error encoding image file: " + e);
+            imageByteString = "\u0000";
         }
     }
 
@@ -38,28 +41,37 @@ public class dbImage extends ReflectionDBObject {
     }
 
     // pathname: Where to save the created/returned file because we can't keep it in this object or the database as-is
-    public File getImageFile(String pathname) {
-        File file = new File(pathname);
-        try {
+    public int getImageFile(File file) {
+        try
+        {
             FileUtils.writeByteArrayToFile(file, Base64.decode(imageByteString));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            return 0;
         }
-        return file;
+        catch (IOException e)
+        {
+            System.out.println("Error decoding image file: " + e);
+            return -1;
+        }
     }
 
     public int replaceImage(String imagePathname) {
         File file = new File(imagePathname);
-        try {
+        String tmp = imageByteString;
+        try
+        {
             imageByteString = Base64.encode(FileUtils.readFileToByteArray(file));
             return 0;
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error encoding image file: " + e);
+            imageByteString = tmp; // Set imgByteString back to it's previous value if failed
+
+            // Successfully deleted newly created file after failed encoding
             if(file.delete()) {
-                // Successfully deleted newly created file after failed encoding
                 return 1;
             }
+
             // Could not delete new file after failed encoding, so it's still j chillin
             return -1;
         }

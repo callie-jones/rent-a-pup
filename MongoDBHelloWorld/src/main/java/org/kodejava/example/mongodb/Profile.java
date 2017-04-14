@@ -19,17 +19,10 @@ public abstract class Profile extends ReflectionDBObject {
         this.age = age;
         this.description = description;
         this.profileImage = new dbImage(profileImagePathname);
-        if(profileImage.isNull()) {
-            System.out.println("Created file but failed while trying to encode image");
+        if(profileImage.getImageByteString().equals("\u0000")) {
+            System.out.println("Error encoding image file.");
         }
     }
-
-//    Profile(String name, int age, String description, dbImage profileDbImage) {
-//        this.name = name;
-//        this.age = age;
-//        this.description = description;
-//        this.profileImage = profileDbImage;
-//    }
 
     Profile(BasicDBObject o) {
         this.name = o.getString("Name");
@@ -80,6 +73,10 @@ public abstract class Profile extends ReflectionDBObject {
     }
 
     public File getProfileImageFile(String pathname) {
-        return profileImage.getImageFile(pathname);
+        File file = new File(pathname);
+        if(profileImage.getImageFile(file) != 0) {
+            System.out.println("Error decoding image file.");
+        }
+        return file;
     }
 }

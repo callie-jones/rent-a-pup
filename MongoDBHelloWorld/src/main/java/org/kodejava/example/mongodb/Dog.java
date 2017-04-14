@@ -14,11 +14,6 @@ public class Dog extends Profile {
         this.breed = breed;
     }
 
-//    Dog(String breed, String name, int age, String description, dbImage profileDbImage) {
-//        super(name, age, description, profileDbImage);
-//        this.breed = breed;
-//    }
-
     Dog(BasicDBObject o) {
         super(o);
         this.breed = o.getString("Breed");
@@ -31,13 +26,4 @@ public class Dog extends Profile {
     public void setBreed(String breed) {
         this.breed = breed;
     }
-
-//    Dog(BasicDBObject o) {
-//        return new Dog(
-//                o.getString("Breed"),
-//                o.getString("Name"),
-//                o.getInt("Age"),
-//                o.getString("Description"),
-//                (dbImage) o.get("ProfileImage"));
-//    }
 }
