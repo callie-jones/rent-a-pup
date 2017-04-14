@@ -24,12 +24,6 @@
 	color: white;
 }
 
-.sweet-alert #email,
-.sweet-alert #password {
-  display: block !important;
-}
-
-
 body {
 	font-family:Arial, Sans-Serif;
 }
