@@ -43,8 +43,9 @@
 				if(pass === "" || email === "") {
 						swal.showInputError("Please Enter Email and Password");
 						return false;
-				} 
-				swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); 
+				}
+				
+				setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); }, 2000);
 				
 			});
 			
