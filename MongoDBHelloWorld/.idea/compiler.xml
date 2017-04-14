@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="MongoDBHelloWorld" />
+        <module name="TestPuppy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MongoDBHelloWorld" target="1.5" />
+      <module name="TestPuppy" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

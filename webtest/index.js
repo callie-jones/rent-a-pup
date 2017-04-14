@@ -22,7 +22,7 @@ app.get('/testPet', function(req, res){
 		var collection = db.collection('petData');
 		var data = req.body;
 		console.log(data);
-		collection.find({name: 'sony'}, function(err, data){
+		collection.find({name: 'callie'}, function(err, data){
 			if(err) { res.send(err.message); }
 			else{ res.send(data); }
 		});
@@ -50,6 +50,7 @@ app.get('/', function (req, res){
 		res.setHeader('Context-Type', 'text/html');
 		res.end(text);
 	});
+    console.log('got homepage')
 	return;
 });
 

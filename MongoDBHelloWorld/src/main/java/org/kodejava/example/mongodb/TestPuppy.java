@@ -1,7 +1,7 @@
 package org.kodejava.example.mongodb;
 
 import com.mongodb.*;
-import java.util.Date;
+
 import java.net.UnknownHostException;
 
 /**
