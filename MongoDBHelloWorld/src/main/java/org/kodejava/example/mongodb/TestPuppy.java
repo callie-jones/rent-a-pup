@@ -112,17 +112,20 @@ public class TestPuppy
     }
 
     //store user info to userData collection in db
-    public static String addUser(String name, String email, String password){
+    public static String addUser(String name, String email, String password, String status){
         if(isConnected()){
             BasicDBObject doc = new BasicDBObject();
             doc.put("name", name);
             doc.put("password", password);
             doc.put("email", email);
+            doc.put("status", status); //admin or user
             userData.insert(doc);
             return "Success";
         }
         return "Failed";
     }
+
+    //user login authentication in database
 
 
     public static void main( String[] args) {
