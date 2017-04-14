@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
  */
 public class Tester {
     public static void main(String args[]) throws IOException {
-        MongoClient client = null;
+        MongoClient client;
         try {
             client = new MongoClient(new ServerAddress("localhost", 27017));
         } catch (UnknownHostException e) {
@@ -27,7 +27,8 @@ public class Tester {
 
         DBCursor cursor = petData.find(searchQuery);
         while(cursor.hasNext()){
-            (new Dog((BasicDBObject) cursor.next())).getProfileImageFile(System.getProperty("user.dir") + "/assets/images/dog_2.jpg");
+            (new Dog((BasicDBObject) cursor.next()))
+                    .getProfileImageFile(System.getProperty("user.dir") + "/assets/images/dog_2.jpg");
         }
     }
 }
