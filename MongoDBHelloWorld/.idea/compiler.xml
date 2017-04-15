@@ -6,13 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MongoDBHelloWorld" />
-        <module name="TestPuppy" />
+        <module name="RAP" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MongoDBHelloWorld" target="1.8" />
-      <module name="TestPuppy" target="1.8" />
+      <module name="RAP" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
