@@ -1,34 +1,40 @@
 package org.kodejava.example.mongodb;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.ReflectionDBObject;
 
 import java.io.File;
+import java.util.Objects;
 
 /**
  * Created by elijahstaple on 4/14/17.
  */
-public abstract class Profile extends ReflectionDBObject {
+public abstract class Profile extends ReflectionDBObject implements hasId {
+    private int type;
     private String name;
     private int age;
     private String description;
     private dbImage profileImage;
 
-    Profile(String name, int age, String description, String profileImagePathname) {
+    Profile(int type, String name, int age, String description, String profileImagePathname) {
+        this.type = type;
         this.name = name;
         this.age = age;
         this.description = description;
         this.profileImage = new dbImage(profileImagePathname);
-        if(profileImage.getImageByteString().equals("\u0000")) {
-            System.out.println("Error encoding image file.");
+        if(Objects.equals(profileImage.getImageByteString(), "")) {
+            System.out.println("Error encoding image file. Retry upload.");
         }
     }
 
-    Profile(BasicDBObject o) {
-        this.name = o.getString("Name");
-        this.age = o.getInt("Age");
-        this.description = o.getString("Description");
-        this.profileImage = new dbImage((BasicDBObject) o.get("ProfileImage"));
+    Profile(DBObject o) {
+        BasicDBObject b = (BasicDBObject) o;
+        this.type = b.getInt("Type");
+        this.name = b.getString("Name");
+        this.age = b.getInt("Age");
+        this.description = b.getString("Description");
+        this.profileImage = new dbImage((DBObject) o.get("ProfileImage"));
     }
 
     public String getName() {
@@ -78,5 +84,13 @@ public abstract class Profile extends ReflectionDBObject {
             System.out.println("Error decoding image file.");
         }
         return file;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

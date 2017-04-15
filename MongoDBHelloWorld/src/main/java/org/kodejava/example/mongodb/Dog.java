@@ -1,6 +1,7 @@
 package org.kodejava.example.mongodb;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 
 /**
@@ -11,14 +12,15 @@ public class Dog extends Profile {
     private String breed;
 
     Dog(String breed, String name, int age, String description, String profileImagePathname) {
-        super(name, age, description, profileImagePathname);
+        super(Type.DOG, name, age, description, profileImagePathname);
         this.breed = breed;
         this.set_id(new ObjectId());
     }
 
-    Dog(BasicDBObject o) {
+    Dog(DBObject o) {
         super(o);
-        this.breed = o.getString("Breed");
+        BasicDBObject b = (BasicDBObject) o;
+        this.breed = b.getString("Breed");
         this.set_id(o.get("_id"));
     }
 

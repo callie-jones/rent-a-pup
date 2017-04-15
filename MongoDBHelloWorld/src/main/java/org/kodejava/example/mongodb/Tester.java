@@ -21,20 +21,21 @@ public class Tester {
         Dog testProfile = new Dog("German Shepard", "Don", 14, "Fun doggy and such",
                 System.getProperty("user.dir") + "/assets/images/tiny.png");
         petData.insert(testProfile);
-        System.out.println(testProfile.getId().getDate());
 
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("Name", "Don");
 
         DBCursor cursor = petData.find(searchQuery);
         while(cursor.hasNext()){
-            Dog dog = new Dog((BasicDBObject) cursor.next());
+            Dog dog = new Dog(cursor.next());
             searchQuery = new BasicDBObject();
             searchQuery.put("_id", dog.getId());
             dog.setBreed("Lab");
             petData.update(searchQuery, dog);
             dog.getProfileImageFile(System.getProperty("user.dir") + "/assets/images/tiny_2.png");
+            System.out.println(dog.getType());
             System.out.println(dog.getId());
+            System.out.println(dog.getId().getDate());
         }
     }
 }
