@@ -41,7 +41,7 @@ public class dbImage extends ReflectionDBObject implements hasId {
         BasicDBObject b = (BasicDBObject) o;
         this.type = b.getInt("Type");
         this.imageByteString = b.getString("ImageByteString");
-        this.set_id(o.get("_id"));
+        this.set_id(b.getObjectId("_id"));
     }
 
     public void setImageByteString(String i) {

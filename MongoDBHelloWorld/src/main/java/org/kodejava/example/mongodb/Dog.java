@@ -21,7 +21,7 @@ public class Dog extends Profile {
         super(o);
         BasicDBObject b = (BasicDBObject) o;
         this.breed = b.getString("Breed");
-        this.set_id(o.get("_id"));
+        this.set_id(b.getObjectId("_id"));
     }
 
     public String getBreed() {
