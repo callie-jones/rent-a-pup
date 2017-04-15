@@ -13,6 +13,7 @@ public class Dog extends Profile {
     Dog(String breed, String name, int age, String description, String profileImagePathname) {
         super(name, age, description, profileImagePathname);
         this.breed = breed;
+        this.set_id(new ObjectId());
     }
 
     Dog(BasicDBObject o) {
