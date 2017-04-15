@@ -11,10 +11,12 @@ import java.util.Date;
  * Created by elijahstaple on 4/15/17.
  */
 public class Booking extends ReflectionDBObject implements hasId {
+    private int type;
     private Date startTime, endTime;
     private ObjectId dogId, renterId;
 
     Booking(Date startTime, Date endTime, ObjectId dogId, ObjectId renterId) {
+        this.type = Type.BOOKING;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dogId = dogId;
@@ -24,11 +26,20 @@ public class Booking extends ReflectionDBObject implements hasId {
 
     Booking(DBObject o) {
         BasicDBObject b = (BasicDBObject) o;
+        this.type = b.getInt("Type");
         this.startTime = b.getDate("StartTime");
         this.endTime = b.getDate("EndTime");
         this.dogId = b.getObjectId("DogId");
         this.renterId = b.getObjectId("RenterId");
         this.set_id(b.getObjectId("_id"));
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public ObjectId getId() {
