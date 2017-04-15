@@ -1,6 +1,7 @@
 package org.kodejava.example.mongodb;
 
 import com.mongodb.BasicDBObject;
+import org.bson.types.ObjectId;
 
 /**
  * Created by elijahstaple on 4/14/17.
@@ -17,6 +18,7 @@ public class Dog extends Profile {
     Dog(BasicDBObject o) {
         super(o);
         this.breed = o.getString("Breed");
+        this.set_id(o.get("_id"));
     }
 
     public String getBreed() {
@@ -25,5 +27,9 @@ public class Dog extends Profile {
 
     public void setBreed(String breed) {
         this.breed = breed;
+    }
+
+    public ObjectId getId() {
+        return (ObjectId) this.get_id();
     }
 }

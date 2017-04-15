@@ -19,7 +19,7 @@ public class Tester {
         }
         DBCollection petData = client.getDB("testPet").getCollection("petData");
         Dog testProfile = new Dog("German Shepard", "Don", 14, "Fun doggy and such",
-                System.getProperty("user.dir") + "/assets/images/dog.jpg");
+                System.getProperty("user.dir") + "/assets/images/tiny.png");
         petData.insert(testProfile);
 
         BasicDBObject searchQuery = new BasicDBObject();
@@ -27,8 +27,9 @@ public class Tester {
 
         DBCursor cursor = petData.find(searchQuery);
         while(cursor.hasNext()){
-            (new Dog((BasicDBObject) cursor.next()))
-                    .getProfileImageFile(System.getProperty("user.dir") + "/assets/images/dog_2.jpg");
+            Dog dog = new Dog((BasicDBObject) cursor.next());
+            dog.getProfileImageFile(System.getProperty("user.dir") + "/assets/images/tiny_2.png");
+            System.out.println(dog.getId());
         }
     }
 }
