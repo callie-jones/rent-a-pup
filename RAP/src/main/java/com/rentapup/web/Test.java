@@ -2,7 +2,6 @@ package com.rentapup.web;
 
 import com.mongodb.*;
 
-import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -13,7 +12,12 @@ import java.security.NoSuchAlgorithmException;
  * Added testing for renter - calvin 4/15/17
  */
 public class Test {
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) {
+        if(!TestDB.initialize()) {
+            System.out.println("Failed to populate database.");
+            return;
+        }
+
         MongoClient client;
         try {
             client = new MongoClient(new ServerAddress("localhost", 27017));
