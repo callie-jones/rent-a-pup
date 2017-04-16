@@ -1,4 +1,4 @@
-package org.kodejava.example.mongodb;
+package com.rentapup.web;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

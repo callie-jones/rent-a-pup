@@ -1,4 +1,4 @@
-package org.kodejava.example.mongodb;
+package com.rentapup.web;
 
 /**
  * Created by elijahstaple on 4/15/17.

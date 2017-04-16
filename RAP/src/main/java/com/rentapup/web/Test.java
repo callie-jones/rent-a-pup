@@ -1,4 +1,4 @@
-package org.kodejava.example.mongodb;
+package com.rentapup.web;
 
 import com.mongodb.*;
 
@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
  * Created by elijahstaple on 4/14/17.
  * Added testing for renter - calvin 4/15/17
  */
-public class Tester {
+public class Test {
     public static void main(String args[]) throws IOException {
         MongoClient client;
         try {
@@ -28,34 +28,34 @@ public class Tester {
         renterData.insert(testRenter);
 
         BasicDBObject searchQuery = new BasicDBObject();
-        searchQuery.put("Name", "Don");
+        searchQuery.put("name", "Don");
 
         BasicDBObject renterQuery = new BasicDBObject();
-        renterQuery.put("Name", "Jimmy");
+        renterQuery.put("name", "Jimmy");
 
         DBCursor cursor = petData.find(searchQuery);
         while(cursor.hasNext()){
             Dog dog = new Dog(cursor.next());
             searchQuery = new BasicDBObject();
-            searchQuery.put("_id", dog.getId());
-            dog.setBreed("Lab");
+            searchQuery.put("_id", dog.getid());
+            dog.setbreed("Lab");
             petData.update(searchQuery, dog);
-            dog.getProfileImageFile(System.getProperty("user.dir") + "/assets/images/tiny_2.png");
-            System.out.println(dog.getType());
-            System.out.println(dog.getId());
-            System.out.println(dog.getId().getDate());
+            dog.getprofileImageFile(System.getProperty("user.dir") + "/assets/images/tiny_2.png");
+            System.out.println(dog.gettype());
+            System.out.println(dog.getid());
+            System.out.println(dog.getid().getDate());
         }
 
         DBCursor search = renterData.find(renterQuery);
         while(search.hasNext()){
             Renter renti = new Renter(search.next());
             renterQuery = new BasicDBObject();
-            renterQuery.put("_id", renti.getId());
+            renterQuery.put("_id", renti.getid());
             renterData.update(renterQuery, renti);
-            renti.getProfileImageFile(System.getProperty("user.dir") + "/assets/images/tiny_3.png");
-            System.out.println(renti.getType());
-            System.out.println(renti.getId());
-            System.out.println(renti.getId().getDate());
+            renti.getprofileImageFile(System.getProperty("user.dir") + "/assets/images/tiny_3.png");
+            System.out.println(renti.gettype());
+            System.out.println(renti.getid());
+            System.out.println(renti.getid().getDate());
         }
     }
 }

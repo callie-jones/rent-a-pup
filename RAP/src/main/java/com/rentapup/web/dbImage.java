@@ -1,4 +1,4 @@
-package org.kodejava.example.mongodb;
+package com.rentapup.web;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -39,16 +39,16 @@ public class dbImage extends ReflectionDBObject implements hasId {
 
     dbImage(DBObject o) {
         BasicDBObject b = (BasicDBObject) o;
-        this.type = b.getInt("Type");
-        this.imageByteString = b.getString("ImageByteString");
+        this.type = b.getInt("type");
+        this.imageByteString = b.getString("imageByteString");
         this.set_id(b.getObjectId("_id"));
     }
 
-    public void setImageByteString(String i) {
+    public void setimageByteString(String i) {
         return;
     }
 
-    public String getImageByteString() {
+    public String getimageByteString() {
         return imageByteString;
     }
 
@@ -98,15 +98,15 @@ public class dbImage extends ReflectionDBObject implements hasId {
         return imageByteString == null;
     }
 
-    public ObjectId getId() {
+    public ObjectId getid() {
         return (ObjectId) this.get_id();
     }
 
-    public int getType() {
+    public int gettype() {
         return type;
     }
 
-    public void setType(int type) {
+    public void settype(int type) {
         this.type = type;
     }
 }

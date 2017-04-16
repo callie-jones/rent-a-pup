@@ -1,4 +1,4 @@
-package org.kodejava.example.mongodb;
+package com.rentapup.web;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Created by elijahstaple on 4/14/17.
  */
-public abstract class Profile extends ReflectionDBObject implements hasId {
+public abstract class Profile extends ReflectionDBObject implements hasId, hasLocation {
     private int type;
     private String name;
     private int age;
@@ -23,49 +23,49 @@ public abstract class Profile extends ReflectionDBObject implements hasId {
         this.age = age;
         this.description = description;
         this.profileImage = new dbImage(profileImagePathname);
-        if(Objects.equals(profileImage.getImageByteString(), "")) {
+        if(Objects.equals(profileImage.getimageByteString(), "")) {
             System.out.println("Error encoding image file. Retry upload.");
         }
     }
 
     Profile(DBObject o) {
         BasicDBObject b = (BasicDBObject) o;
-        this.type = b.getInt("Type");
-        this.name = b.getString("Name");
-        this.age = b.getInt("Age");
-        this.description = b.getString("Description");
-        this.profileImage = new dbImage((DBObject) o.get("ProfileImage"));
+        this.type = b.getInt("type");
+        this.name = b.getString("name");
+        this.age = b.getInt("age");
+        this.description = b.getString("description");
+        this.profileImage = new dbImage((DBObject) o.get("profileImage"));
     }
 
-    public String getName() {
+    public String getname() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setname(String name) {
         this.name = name;
     }
 
-    public int getAge() {
+    public int getage() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setage(int age) {
         this.age = age;
     }
 
-    public String getDescription() {
+    public String getdescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setdescription(String description) {
         this.description = description;
     }
 
-    public dbImage getProfileImage() {
+    public dbImage getprofileImage() {
         return profileImage;
     }
 
-    public int setProfileImage(String profileImagePathname) {
+    public int setprofileImage(String profileImagePathname) {
         int errorCode;
         if((errorCode = profileImage.replaceImage(profileImagePathname)) != 0) {
             //TODO: Throw an error because it failed to replace the image
@@ -78,7 +78,7 @@ public abstract class Profile extends ReflectionDBObject implements hasId {
         return errorCode;
     }
 
-    public File getProfileImageFile(String pathname) {
+    public File getprofileImageFile(String pathname) {
         File file = new File(pathname);
         if(profileImage.getImageFile(file) != 0) {
             System.out.println("Error decoding image file.");
@@ -86,11 +86,11 @@ public abstract class Profile extends ReflectionDBObject implements hasId {
         return file;
     }
 
-    public int getType() {
+    public int gettype() {
         return type;
     }
 
-    public void setType(int type) {
+    public void settype(int type) {
         this.type = type;
     }
 }
