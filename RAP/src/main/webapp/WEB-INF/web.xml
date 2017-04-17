@@ -4,17 +4,28 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 id="WebApp_ID" version="3.0">
-  <display-name>Java Query Servlet</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
+    <display-name>Java Query Servlet</display-name>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    
+    <context-param>
+        <param-name>MONGODB_HOST</param-name>
+        <param-value>localhost</param-value>
+    </context-param>
+    <context-param>
+        <param-name>MONGODB_PORT</param-name>
+        <param-value>27017</param-value>
+    </context-param>
   
-  <servlet>
-  	<servlet-name>queryservlet</servlet-name>            
-  	<servlet-class>com.rentapup.web.QueryServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>queryservlet</servlet-name>
-  	<url-pattern>/queryservlet</url-pattern>
-  </servlet-mapping>
+<!--
+    <servlet>
+        <servlet-name>queryservlet</servlet-name>            
+        <servlet-class>com.rentapup.web.QueryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>queryservlet</servlet-name>
+        <url-pattern>/queryservlet</url-pattern>
+    </servlet-mapping>
+-->
 </web-app>
