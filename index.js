@@ -9,7 +9,7 @@ app.use(bodyParser());
 var path = require('path');
 
 //app.use for css and js files
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/RAP/src/main/webapp'));
 
 //mongodb URI
 var url = 'mongodb://localhost:27017/testPet';
@@ -45,14 +45,14 @@ app.post('/place', function(req, res){
 });
 
 //get HTML files and set page
-app.get('/', function (req, res){
-	fs.readFile('html/index.html', function(err, text){
-		res.setHeader('Context-Type', 'text/html');
-		res.end(text);
-	});
-    console.log('got homepage')
-	return;
-});
+//app.get('/', function (req, res){
+//	fs.readFile('/index.html', function(err, text){
+//		res.setHeader('Context-Type', 'text/html');
+//		res.end(text);
+//	});
+//    console.log('got homepage')
+//	return;
+//});
 
 //server on ____ or localhost:3000
 var server = app.listen(process.env.PORT || 3000, "localhost", function(){
