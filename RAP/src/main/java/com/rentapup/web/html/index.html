@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+        
+    <!--Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+                
+    <!--Sweet Alert-->
+    <script src="sweetalert.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+
+	<object type="application/x-java-applet" width="100" height="100">
+        <param name="codebase"  value="/home/callie/classes/obj-oriented/rent-a-pup/RAP/src/main/java/com/rentapup/web/WebTest.java" />
+        <param name="code"      value="WebTest" />
+        <param name="mayscript" value="true" />
+		<param name="scriptable" value="true" />
+   	</applet>
+
+                    
+                    
+</head>
+    
+<body>
+    <script>
+
+		function test(){
+        console.log("<p> "+"Test"+" </p>");
+        try{
+            var s=document.WebTest.test();
+			//var t=Packages.com.rentapup.web.WebTest.test();
+            console.log("<p> First: "+s+" </p>");
+
+        }catch(err){
+            console.log("<p>Error Caught 1: "+err.description+"</p>");
+        }
+
+
+        try{
+            var s=document.getElementById('WebTest').test();
+            console.log("<p> Second: "+s+" </p>");
+
+        }catch(err){
+            console.log("<p>Error Caught 2: "+err.description+"</p>");
+        }
+
+		try{
+            var s=Packages.com.rentapup.web.WebTest.test();
+            console.log("<p> Second: "+s+" </p>");
+
+        }catch(err){
+            console.log("<p>Error Caught 2: "+err.description+"</p>");
+        }
+
+
+    }
+
+
+		function authUser(pass, username){
+			//var passHash = Packages.rentapup.web.UserAuthData.getpasswordHash();
+			document.japp.test();
+			var created = document.japp.createUser("callie", "callie@gmail", "jones");
+			var authorized = document.japp.verifyLogin("callie", "jones");
+			var userhash = CryptoJS.SHA512(pass);
+			if(authorized == true) {
+				console.log(created);
+				console.log(authorized);
+				return true;
+			}
+			//if(userhash == passhash) return true;
+			return false;
+		
+		}
+            
+        function loginPopUp(){
+
+			swal({
+				title: "Please Login",
+				text: "Username: <input id='username' type='text'><br>Password:<input id='password' type='password'>",
+				html: true,
+				showCancelButton:true,
+				cancelButtonText: "Cancel",
+				confirmButtonText: "Login",
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true,
+				allowOutsideClick: true,
+				animation: true,
+			},
+			function(){
+				var pass = document.getElementById('password').value;
+				var username = document.getElementById('username').value;
+				//if no input show error
+				if(pass === "" || username === "") {
+						swal.showInputError("Please Enter Username and Password");
+				}
+				//test();
+				//if login auth success
+				if(authUser(pass, username) == true) 
+				{
+				setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); }, 2000);
+				}
+				setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1000, showConfirmButton: false }); }, 2000);
+				
+			});
+			
+	
+		
+
+
+		}
+      
+		//ajax call to post
+		//	$.ajax({
+			//	url:'/place',
+			//	type:'POST',
+			//	data: test,
+			//	dataTpye: 'JSON',
+			//	success: function(){
+			//	console.log("ajax works");
+			//	},
+			//	error: function(){
+			//		console.log("ajax failed");
+			//		}
+			//	}); swal("Success!", "test completed", "success")
+		//	}
+
+		/*ajax call to get
+			$.ajax({
+				url:'/petData',
+				type:'GET',
+				data: test,
+				dataType: 'html',
+				success: function(data){
+					console.log("ajax works");
+					$("#resultarea").text(data);
+					},
+				error: function(){
+					console.log("ajax failed");
+					}
+				}); swal("Success!", "test completed", "success")
+			}*/
+			
+
+        
+        //Function verify user login
+        function testCoName(){
+            var failed = false;
+	    var coNames = ["SONY", "SAMSUNG", "NINTENDO"];
+	    var input = document.getElementById('co_name').value.toUpperCase();
+            if(jQuery.inArray(input, coNames) == -1) failed = true;
+            if(failed) console.log("Expected a listed company name");
+            if(failed) swal("Oops...", "Please choose one the listed companies", "error");
+            if(failed == false) alert(); //check if correct company is chosen
+        }
+
+	
+    </script>
+        
+			<div class="topnav" id="NavBar">
+				<a href="#home">Home</a>
+				<a href="#login" onclick="test();">Login</a>
+				<a href="#about">About</a>
+			</div>
+
+            <img src="img/logo.png" style="width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+
+
+            
+    </body>
+</html>

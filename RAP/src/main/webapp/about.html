@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+        
+    <!--Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+                
+    <!--Sweet Alert-->
+    <script src="js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert.css">
+
+                    
+                    
+</head>
+    
+<body>
+    <script>
+
+		function userAuth(email, pass){
+
+
+			var query = {};
+			query['queryType'] = "AUTH_USER";
+			query['query']= function(){"username","callie","password", "pass"}
+
+            $.ajax({
+				url:"queryservlet",
+				type:'POST',
+				data: JSON.stringify(query),
+				dataType: 'text',
+				success:  function(data) { 
+					alert("success");
+					return true;
+				 },
+				error: function(ts) { 
+					alert(ts.responseText);
+					return false;
+				 }
+				});
+		}
+
+
+            
+        function loginPopUp(){
+
+			swal({
+				title: "Please Login",
+				text: "Email: <input id='email' type='text'><br>Password:<input id='password' type='password'>",
+				html: true,
+				showCancelButton:true,
+				cancelButtonText: "Cancel",
+				confirmButtonText: "Login",
+				closeOnConfirm: false,
+				showLoaderOnConfirm: true,
+				allowOutsideClick: true,
+				animation: true,
+			},
+			function(){
+				var pass = document.getElementById('password').value;
+				var email = document.getElementById('email').value;
+				if(pass === "" || email === "") {
+						swal.showInputError("Please Enter Email and Password");
+						return false;
+				}
+                if(userAuth(email, pass) == true){
+				
+				    setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); }, 2000);
+				}
+				else {
+					setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1000, showConfirmButton: false }); }, 2000);
+				}
+			});
+			
+	
+		
+
+
+		}
+           
+      
+
+
+
+	
+    </script>
+        
+			<div class="topnav" id="NavBar">
+				<a href="#home" onclick="window.location.href='index.html'">Home</a>
+				<a style="text-align:right;" href="#login" onclick="loginPopUp();">Login</a>
+				<a href="#about" onclick="window.location.href='about.html'">About</a>
+			</div>
+
+            <img src="img/logo.png" style="width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+
+			<div class="about-info" id="info">
+				<p style="text-align:center;">We are an organization that cares about dogs</p>
+			</div>
+
+            
+    </body>
+</html>
