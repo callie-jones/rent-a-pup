@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 /**
  * Created by elijahstaple on 4/16/17.
  */
-public class QueryServlet extends HttpServlet{
+public class QueryServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,7 +25,8 @@ public class QueryServlet extends HttpServlet{
 
         ObjectMapper mapper = new ObjectMapper();
         Query query = mapper.readValue(json, Query.class);
-        response.setContentType("type/string");
+        System.out.println(query.toString());
+        response.setContentType("text");
         mapper.writeValue(response.getOutputStream(), "Sucessful AJAX query!!!");
     }
 }
