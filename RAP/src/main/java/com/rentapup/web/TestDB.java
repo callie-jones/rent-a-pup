@@ -73,8 +73,8 @@ public abstract class TestDB {
             UserAuthData testAuthData = new UserAuthData(((ArrayList<String>) renters.get(2)).get(i),
                     UUID.randomUUID().toString(), testRenter.getid());
             authData.insert(testAuthData, WriteConcern.ACKNOWLEDGED);
-            long time = System.currentTimeMillis() + 1800 * i;
-            Booking booking = new Booking(new Date(time), new Date(time + 7200), testDog.getid(), testRenter.getid());
+            long time = System.currentTimeMillis() + 1800 * i * 1000;
+            Booking booking = new Booking(new Date(time), new Date(time + 7200 * 1000), testDog.getid(), testRenter.getid());
             bookingData.insert(booking, WriteConcern.ACKNOWLEDGED);
         }
     }
