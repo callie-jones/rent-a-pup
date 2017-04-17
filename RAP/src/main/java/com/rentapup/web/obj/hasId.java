@@ -1,4 +1,4 @@
-package com.rentapup.web;
+package com.rentapup.web.obj;
 
 import org.bson.types.ObjectId;
 

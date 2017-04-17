@@ -1,4 +1,4 @@
-package com.rentapup.web;
+package com.rentapup.web.obj;
 
 /**
  * Created by elijahstaple on 4/15/17.

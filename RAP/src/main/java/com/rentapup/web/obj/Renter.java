@@ -1,4 +1,4 @@
-package com.rentapup.web;
+package com.rentapup.web.obj;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -11,13 +11,13 @@ public class Renter extends Profile {
 
     private BasicDBObject location;
 
-    Renter(String name, int age, String description, String photo){
+    public Renter(String name, int age, String description, String photo){
         super(Type.RENTER, name, age, description, photo);
         this.location = Location.newLocation();
         this.set_id(new ObjectId());
     }
 
-    Renter(DBObject o) {
+    public Renter(DBObject o) {
         super(o);
         BasicDBObject b = (BasicDBObject) o;
         this.location = (BasicDBObject) b.get("location");

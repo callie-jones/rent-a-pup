@@ -1,10 +1,8 @@
-package com.rentapup.web;
+package com.rentapup.web.obj;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
-
-import java.util.ArrayList;
 
 /**
  * Created by elijahstaple on 4/14/17.
@@ -14,14 +12,14 @@ public class Dog extends Profile {
     private String breed;
     private BasicDBObject location;
 
-    Dog(String breed, String name, int age, String description, String profileImagePathname) {
+    public Dog(String breed, String name, int age, String description, String profileImagePathname) {
         super(Type.DOG, name, age, description, profileImagePathname);
         this.location = Location.newLocation();
         this.breed = breed;
         this.set_id(new ObjectId());
     }
 
-    Dog(DBObject o) {
+    public Dog(DBObject o) {
         super(o);
         BasicDBObject b = (BasicDBObject) o;
         this.breed = b.getString("breed");

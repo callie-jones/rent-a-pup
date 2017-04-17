@@ -1,6 +1,10 @@
 package com.rentapup.web;
 
 import com.mongodb.*;
+import com.rentapup.web.obj.Booking;
+import com.rentapup.web.obj.Dog;
+import com.rentapup.web.obj.Renter;
+import com.rentapup.web.obj.UserAuthData;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.rentapup.web;
+package com.rentapup.web.obj;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -16,7 +16,7 @@ public class Booking extends ReflectionDBObject implements hasId, hasLocation {
     private ObjectId dogId, renterId;
     private BasicDBObject location;
 
-    Booking(Date startTime, Date endTime, ObjectId dogId, ObjectId renterId) {
+    public Booking(Date startTime, Date endTime, ObjectId dogId, ObjectId renterId) {
         this.type = Type.BOOKING;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -26,7 +26,7 @@ public class Booking extends ReflectionDBObject implements hasId, hasLocation {
         this.set_id(new ObjectId());
     }
 
-    Booking(DBObject o) {
+    public Booking(DBObject o) {
         BasicDBObject b = (BasicDBObject) o;
         this.type = b.getInt("type");
         this.startTime = b.getDate("startTime");

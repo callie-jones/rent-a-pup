@@ -1,4 +1,4 @@
-package com.rentapup.web;
+package com.rentapup.web.obj;
 
 import com.mongodb.ReflectionDBObject;
 import org.bson.types.ObjectId;
@@ -15,7 +15,7 @@ public class UserAuthData extends ReflectionDBObject {
     private String username;
     private ObjectId userId;
 
-    UserAuthData(String username, String password, ObjectId userId) {
+    public UserAuthData(String username, String password, ObjectId userId) {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA-256");
