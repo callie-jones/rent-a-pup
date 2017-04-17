@@ -28,16 +28,18 @@
 
 			var query = {};
 			query['queryType'] = "AUTH_USER";
-			query['query']= function(){"username","callie","password", "pass"}
+			query['user'] = "callie";
+			query['pass'] = "jones";
 
             $.ajax({
-				url:"queryservlet",
+				url:"/test",
 				type:'POST',
 				data: JSON.stringify(query),
 				dataType: 'text',
 				success:  function(data) { 
-					alert("success");
-					return true;
+					console.log(data);
+					if(data == "Successful Authentication") return true;
+					return false;
 				 },
 				error: function(ts) { 
 					alert(ts.responseText);
@@ -74,6 +76,7 @@
 				    setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); }, 2000);
 				}
 				else {
+					console.log(userAuth(email, pass));
 					setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1000, showConfirmButton: false }); }, 2000);
 				}
 			});
