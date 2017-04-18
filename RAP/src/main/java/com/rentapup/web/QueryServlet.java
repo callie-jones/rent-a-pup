@@ -59,9 +59,10 @@ public class QueryServlet extends HttpServlet {
             }
             //String passwordstr = "jones";
             byte[] passwordHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            DBObject query = QueryBuilder.start("username").is(username).and("passwordHash").is(passwordHash).get();
+            DBObject searchquery = QueryBuilder.start("username").is(username).and("passwordHash").is(passwordHash).get();
             //query.put("name", "callie");
-            DBCursor cursor = authData.find(query);
+            DBCursor cursor = authData.find(searchquery);
+
             if(cursor.hasNext()){
                 while(cursor.hasNext()) {
                     System.out.println(cursor.next());
