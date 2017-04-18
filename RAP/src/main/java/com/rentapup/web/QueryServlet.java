@@ -55,19 +55,22 @@ public class QueryServlet extends HttpServlet {
                 digest = MessageDigest.getInstance("SHA-256");
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-                return "Failed1";
+                return null;
             }
             //String passwordstr = "jones";
             byte[] passwordHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             DBObject query = QueryBuilder.start("username").is(username).and("passwordHash").is(passwordHash).get();
             //query.put("name", "callie");
             DBCursor cursor = authData.find(query);
-            if(cursor != null){
-                //System.out.println(cursor.next());
+            if(cursor.hasNext()){
+                while(cursor.hasNext()) {
+                    System.out.println(cursor.next());
+                }
                 return "Successful Authentication";
             }
+            return null;
         }
-        return "Failed";
+        return null;
 
     }
 
@@ -84,6 +87,7 @@ public class QueryServlet extends HttpServlet {
         System.out.println(query.getUser());
         System.out.print("Password : ");
         System.out.println(query.getPass());
+        System.out.println(testAuth(query.getUser(), query.getPass()));
         response.setContentType("text");
         mapper.writeValue(response.getOutputStream(), testAuth(query.getUser(), query.getPass()));
     }
