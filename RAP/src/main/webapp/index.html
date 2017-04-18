@@ -22,26 +22,24 @@
     
 <body>
     <script>
-
-		function userAuth(email, pass){
-
+		
+		function userAuth(email, pass, callback){
 
 			var query = {};
 			query['queryType'] = "AUTH_USER";
-			query['query']= function(){"username","callie","password", "pass"}
+			query['user'] = email;
+			query['pass'] = pass;
 
-            $.ajax({
-				url:"queryservlet",
+           $.ajax({
+				url:"/test",
 				type:'POST',
 				data: JSON.stringify(query),
 				dataType: 'text',
 				success:  function(data) { 
-					alert("success");
-					return true;
+					callback(data);
 				 },
 				error: function(ts) { 
 					alert(ts.responseText);
-					return false;
 				 }
 				});
 		}
@@ -65,17 +63,22 @@
 			function(){
 				var pass = document.getElementById('password').value;
 				var email = document.getElementById('email').value;
-				if(pass === "" || email === "") {
+				userAuth(email, pass, function(data) {
+					console.log(data);
+					if(pass === "" || email === "") {
 						swal.showInputError("Please Enter Email and Password");
-						return false;
-				}
-                if(userAuth(email, pass) == true){
-				
-				    setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); }, 2000);
-				}
-				else {
-					setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1000, showConfirmButton: false }); }, 2000);
-				}
+						console.log("1");
+					}
+		            else if(data != null){
+						console.log("2");
+						setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1000, showConfirmButton: false }); }, 2000);
+					}
+					else {
+						console.log("3");
+						setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1000, showConfirmButton: false }); }, 2000);
+					}
+					
+				});
 			});
 			
 	
@@ -98,6 +101,7 @@
 			</div>
 
             <img src="img/logo.png" style="width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+
 
 
             
