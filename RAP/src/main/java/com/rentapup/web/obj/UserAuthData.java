@@ -1,6 +1,6 @@
 package com.rentapup.web.obj;
 
-import com.mongodb.ReflectionDBObject;
+import com.mongodb.*;
 import org.bson.types.ObjectId;
 
 import java.nio.charset.StandardCharsets;
@@ -50,5 +50,25 @@ public class UserAuthData extends ReflectionDBObject {
 
     public void setuserId(ObjectId userId) {
         this.userId = userId;
+    }
+
+    public static String testAuth(DBCollection authData, String username, String password){
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        byte[] passwordHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        DBObject searchquery = QueryBuilder.start("username").is(username)
+                .and("passwordHash").is(passwordHash).get();
+        DBCursor cursor = authData.find(searchquery, QueryBuilder.start("_id").is(0).and("userId").is(1).get());
+
+        if(cursor.count() == 1){
+            return ((ObjectId) cursor.next().get("userId")).toHexString();
+        }
+        return null;
     }
 }
