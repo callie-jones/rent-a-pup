@@ -10,7 +10,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by elijahstaple on 4/15/17.
@@ -75,7 +74,7 @@ public abstract class TestDB {
                     System.getProperty("user.dir") + "/assets/images/tiny.png");
             renterData.insert(testRenter, WriteConcern.ACKNOWLEDGED);
             UserAuthData testAuthData = new UserAuthData(((ArrayList<String>) renters.get(2)).get(i),
-                    UUID.randomUUID().toString(), testRenter.getid());
+                    "jones", testRenter.getid());
             authData.insert(testAuthData, WriteConcern.ACKNOWLEDGED);
             long time = System.currentTimeMillis() + 1800 * i * 1000;
             Booking booking = new Booking(new Date(time), new Date(time + 7200 * 1000), testDog.getid(), testRenter.getid());
