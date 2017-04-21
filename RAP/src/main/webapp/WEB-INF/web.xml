@@ -17,15 +17,4 @@ id="WebApp_ID" version="3.0">
         <param-name>MONGODB_PORT</param-name>
         <param-value>27017</param-value>
     </context-param>
-  
-<!--
-    <servlet>
-        <servlet-name>queryservlet</servlet-name>            
-        <servlet-class>com.rentapup.web.QueryServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>queryservlet</servlet-name>
-        <url-pattern>/queryservlet</url-pattern>
-    </servlet-mapping>
--->
 </web-app>

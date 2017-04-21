@@ -19,9 +19,9 @@ import java.io.InputStreamReader;
 /**
  * Created by elijahstaple on 4/16/17.
  */
-@WebServlet("/test")
-public class QueryServlet extends HttpServlet {
-    
+@WebServlet("/auth")
+public class UserAuthServlet extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
