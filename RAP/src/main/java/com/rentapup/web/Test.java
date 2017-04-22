@@ -1,5 +1,7 @@
 package com.rentapup.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.*;
 import com.rentapup.web.obj.Dog;
 import com.rentapup.web.obj.Renter;
@@ -87,5 +89,11 @@ public class Test {
 
         if(authData.find(authQuery).count() == 1) System.out.println("Authorization successful!");
         else System.out.println("Authorization failed :(");
+
+        try {
+            System.out.println(new ObjectMapper().writeValueAsString(QueryHelper.renterProfile(renterData, testRenter.getid().toHexString())));
+        } catch (JsonProcessingException e) {
+            System.out.println(QueryHelper.renterProfile(renterData, testRenter.getid().toHexString()));
+        }
     }
 }

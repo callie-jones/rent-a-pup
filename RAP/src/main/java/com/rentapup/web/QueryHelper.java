@@ -4,6 +4,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
+import com.rentapup.web.obj.Query;
 import com.rentapup.web.obj.Renter;
 import org.bson.types.ObjectId;
 
@@ -39,5 +40,23 @@ class QueryHelper {
         Renter renter = new Renter(name, age, "", "/assets/images/default.png");
         col.insert(renter);
         return renter.getid().toHexString();
+    }
+
+    static Query renterProfile(DBCollection col, String id) {
+        Query<String, Object> results;
+        DBObject query = QueryBuilder.start("_id").is(new ObjectId(id)).and("type").is(2).get();
+        DBCursor cursor = col.find(query);
+        if(cursor.count() == 1){
+            Renter renter =  new Renter(cursor.next());
+            results = new Query<String, Object>();
+            results.put("id", renter.getid().toHexString());
+            results.put("name", renter.getname());
+            results.put("age", renter.getage());
+            results.put("description", renter.getdescription());
+            results.put("location", renter.getlocation().toString());
+        } else {
+            results = null;
+        }
+        return results;
     }
 }
