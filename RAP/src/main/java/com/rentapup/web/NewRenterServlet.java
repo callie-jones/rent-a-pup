@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by elijahstaple on 4/16/17.
+ * Created by elijahstaple on 4/22/17.
  */
-@WebServlet("/auth")
-public class UserAuthServlet extends HttpServlet {
+@WebServlet("/newrenter")
+public class NewRenterServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,17 +31,17 @@ public class UserAuthServlet extends HttpServlet {
         json = br.readLine();
 
         ObjectMapper mapper = new ObjectMapper();
-        Query<String, String> query = mapper.readValue(json, new TypeReference<Query<String, String>>(){});
+        Query<String, Object> query = mapper.readValue(json, new TypeReference<Query<String, Object>>(){});
 
-        System.out.print("User : ");
-        System.out.println(query.get("user"));
-        System.out.print("Password : ");
-        System.out.println(query.get("pass"));
+        System.out.print("Name : ");
+        System.out.println(query.get("name"));
+        System.out.print("Age : ");
+        System.out.println(query.get("age"));
 
-        DBCollection authCol = ((MongoClient) request.getServletContext().getAttribute("MONGO_CLIENT"))
-                .getDB("rapTest").getCollection("authData");
-        System.out.println(QueryHelper.testAuth(authCol, query.get("user"), query.get("pass")));
+        DBCollection renterCol = ((MongoClient) request.getServletContext().getAttribute("MONGO_CLIENT"))
+                .getDB("rapTest").getCollection("renterData");
+        System.out.println(QueryHelper.newRenter(renterCol, (String) query.get("name"), (int) query.get("age")));
         response.setContentType("text");
-        mapper.writeValue(response.getOutputStream(), QueryHelper.testAuth(authCol, query.get("user"), query.get("pass")));
+        mapper.writeValue(response.getOutputStream(), QueryHelper.newRenter(renterCol, (String) query.get("name"), (int) query.get("age")));
     }
 }
