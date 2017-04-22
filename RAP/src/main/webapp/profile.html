@@ -17,11 +17,12 @@
     <link rel="stylesheet" href="css/sweetalert.css">
 
     <script>
-		
+
 		function userAuth(email, pass, callback){
 			var query = {};
 			query['user'] = email;
 			query['pass'] = pass;
+
            $.ajax({
 				url:"/auth",
 				type:'POST',
