@@ -17,6 +17,19 @@
     <link rel="stylesheet" href="css/sweetalert.css">
 
     <script>
+        function getUserInfo(variable){
+            var query = {};
+			query['id'] = variable.replace(/\"/g, "");
+			$.ajax({
+				url:"/profile",
+				type:'POST',
+                data: JSON.stringify(query),
+				dataType: 'text',
+				success:  function(data) {
+                    console.log(data);
+				 }
+				});
+        }
 
 		function userAuth(email, pass, callback){
 			var query = {};
@@ -30,6 +43,7 @@
 				dataType: 'text',
 				success:  function(data) {
 					callback(data);
+					getUserInfo(data);
 				 },
 				error: function(ts) {
 					alert(ts.responseText);
@@ -78,11 +92,17 @@
 
 <body>
 <div class="topnav" id="NavBar">
-    <a href="#home">Home</a>
+    <a href="#home" onclick="window.location.href='/'">Home</a>
     <a href="#login" style="text-align:right;" onclick="loginPopUp();">Login</a>
     <a href="#profile" onclick="window.location.href='profile.html'">Profile</a>
 </div>
 
 <img src="img/logo.png" style="width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+
+<div>
+    <h2>Profile_Name: <h3>Age, </h3><h4>Location</h4></h2>
+    <p>Description.</p>
+</div>
+
 </body>
 </html>
