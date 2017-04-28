@@ -49,13 +49,40 @@ class QueryHelper {
         Date endDate = DBHandling.getEndDate(end);
 
         //TODO fix overlap booking
-        DBObject currentBookings = QueryBuilder.start("startTime").lessThan(startDate).and("startTime").lessThan(endDate).and("endTime").greaterThan(startDate).and("endTime").greaterThan(endDate).and("dogId").is(dogId).get();
-        DBCursor cursor = bookingData.find(currentBookings);
-        if(cursor.count() > 0){
+//        DBObject currentBookings = QueryBuilder.start("startTime").lessThan(startDate).and("startTime").lessThan(endDate).and("endTime").greaterThan(startDate).and("endTime").greaterThan(endDate).and("dogId").is(dogId).get();
+//        DBCursor cursor = bookingData.find(currentBookings);
+//        if(cursor.count() > 0){
+//            return null;
+//        }
+        if(dogAvailable(dogData, bookingData, dog, start, end) == "Success") {
+            Booking booking = new Booking(startDate, endDate, dogId, renterId);
+            bookingData.insert(booking);
+            return "Success";
+        }
+        return null;
+    }
+
+    static String dogAvailable(DBCollection dogData, DBCollection bookingData, String dogName, String start, String end){
+        ObjectId dogId = DBHandling.getDogId(dogData, dogName);
+        Date startDate = DBHandling.getStartDate(start);
+        Date endDate = DBHandling.getEndDate(end);
+
+        //start time occurs during existing booking
+        DBObject sdm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).and("dogId").is(dogId).get();
+        //existing booking ends during attempted booking
+        DBObject etm = QueryBuilder.start("endTime").greaterThan(startDate).and("endTime").lessThan(endDate).and("dogId").is(dogId).get();
+        //existing booking starts during attempted booking
+        DBObject stm = QueryBuilder.start("startTime").greaterThan(startDate).and("startTime").lessThan(endDate).and("dogId").is(dogId).get();
+        //end time occurs during existing booking
+        DBObject edm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).and("dogId").is(dogId).get();
+
+        DBCursor sdmcursor = bookingData.find(sdm);
+        DBCursor etmcursor = bookingData.find(etm);
+        DBCursor edmcursor = bookingData.find(edm);
+        DBCursor stmcursor = bookingData.find(stm);
+        if(sdmcursor.count() > 0 || edmcursor.count() > 0 || stmcursor.count() > 0 || etmcursor.count() > 0 ){
             return null;
         }
-        Booking booking = new Booking(startDate, endDate, dogId, renterId);
-        bookingData.insert(booking);
         return "Success";
     }
 

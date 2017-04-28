@@ -25,7 +25,7 @@ function addUser(email, pass, last, first, callback){
 function signUp(){
 			swal({
 				title: "Sign Up For Free!",
-				text: "First Name: <input id='firstName' type='text'>Last Name: <input id='lastName' type='text'>Email: <input id='email' type='text'>Password:<input id='password' type='password'><br><a href='#signup' style='color:#59C1F1' onclick='signUp();'>Dont Have An Account?</a><br>",
+				text: "First Name: <input id='firstName' type='text'>Last Name: <input id='lastName' type='text'>Email: <input id='email' type='text'>Password:<input id='password' type='password'><br><a href='#' style='color:#59C1F1' onclick='signUp();'>Dont Have An Account?</a><br>",
 				html: true,
 				showCancelButton:true,
 				cancelButtonText: "Cancel",
@@ -45,17 +45,19 @@ function signUp(){
                     swal.showInputError("Please Enter all Fields");
                     console.log("1");
                 }
-				addUser(email, pass, first, last, function(data) {
-					console.log(data);
-					console.log(data.length);
-		            if(data === "null"){
-                        console.log("3");
-						setTimeout(function(){ swal({ title:"Sign-Up Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
-					}
-					else {
-						console.log("2");
-						setTimeout(function(){ swal({ title:"Sign-Up Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
-					}
-				});
+                else {
+					addUser(email, pass, first, last, function(data) {
+						console.log(data);
+						console.log(data.length);
+				        if(data === "null"){
+		                    console.log("3");
+							setTimeout(function(){ swal({ title:"Sign-Up Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+						}
+						else {
+							console.log("2");
+							setTimeout(function(){ swal({ title:"Sign-Up Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+						}
+					});
+				}
 			});
 		}

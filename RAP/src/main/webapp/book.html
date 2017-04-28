@@ -20,13 +20,15 @@
     <script src="js/sweetalert.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert.css">
 	
-	<script src="signup.js"></script>
+	<script src="js/signup.js"></script>
+	<script src="js/login.js"></script>
 	<script src="book.js"></script>
     <script>
 				
 		var booked = false;
 		function bookAuth(user, billing, start, end, dog, callback){
 			var query = {};
+			query['qType'] = "addBooking";
 			query['start'] = start;
 			query['end'] = end;
 			query['dog'] = dog;
