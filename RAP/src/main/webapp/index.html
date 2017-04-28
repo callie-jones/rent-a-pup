@@ -8,22 +8,34 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+	<link rel="stylesheet" type="text/css" href="css/test.css">
     <!--Sweet Alert-->
     <script src="js/sweetalert.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert.css">
+	
+	<script src="signup.js"></script>
+	<script src="login.js"></script>
 
     <script>
-		
-		function userAuth(email, pass, callback){
+		function searchAuth(start, end, dog, callback){
 			var query = {};
-			query['user'] = email;
-			query['pass'] = pass;
+			query['start'] = start;
+			query['end'] = end;
+			query['dog'] = dog;
+			//query['user'] = user;
+			//query['bill'] = billing;
+			console.log(query['start']);
+			console.log(query['dog']);
            $.ajax({
-				url:"/auth",
+				url:"/search",
 				type:'POST',
 				data: JSON.stringify(query),
 				dataType: 'text',
@@ -36,40 +48,25 @@
 				});
 		}
 
-        function loginPopUp(){
-			swal({
-				title: "Please Login",
-				text: "Email: <input id='email' type='text'><br>Password:<input id='password' type='password'>",
-				html: true,
-				showCancelButton:true,
-				cancelButtonText: "Cancel",
-				confirmButtonText: "Login",
-				closeOnConfirm: false,
-				showLoaderOnConfirm: true,
-				allowOutsideClick: true,
-				animation: true,
-			},
-			function(){
-				var pass = document.getElementById('password').value;
-				var email = document.getElementById('email').value;
-                if(pass === "" || email === "") {
-                    swal.showInputError("Please Enter Email and Password");
-                    console.log("1");
-                }
-				userAuth(email, pass, function(data) {
+        function search(){
+				//var user = document.getElementById('user').value;
+				//var billing = document.getElementById('billing').value;
+				//var date = document.getElementById('date').value;
+				var start = document.getElementById('start').value;
+				var end = document.getElementById('end').value;
+				var dog = document.getElementById('dog').value;
+				bookAuth( start, end, dog, function(data) {
 					console.log(data);
 					console.log(data.length);
 		            if(data === "null"){
-                        console.log("3");
-						setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+						setTimeout(function(){ swal({ title:"Search Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
 					}
 					else {
-						console.log("2");
-						setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+						setTimeout(function(){ swal({ title:"Search Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
 					}
 				});
-			});
 		}
+		
 
     </script>
 
@@ -77,11 +74,53 @@
 
 <body>
 <div class="topnav" id="NavBar">
-    <a href="#home">Home</a>
+    <a href="index.html">Home</a>
     <a href="#login" style="text-align:right;" onclick="loginPopUp();">Login</a>
-    <a href="#profile" onclick="window.location.href='profile.html'">Profile</a>
+    <a href="#" onclick="window.location.href='profile.html'">Profile</a>
+	<a href="pups.html" onclick="window.location.href='pups.html'">Meet The Pups!</a>
+
+<div class="container" id="search">
+	<div class="row">
+		<div class="col-md-12">
+            <div class="input-group" id="adv-search">
+                <input type="text" class="form-control" placeholder="Search for a pup!" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form class="form-horizontal" role="form">
+                                  <div class="form-group">
+                                    <label for="filter">Dog Name</label>
+                                    <select class="form-control">
+                                        <option>Max</option>
+                                        <option>Elias</option>
+                                        <option>Calvin</option>
+                                        <option>Callie</option>
+                                    </select>
+                                  </div>
+                                 	<div class="form-group">
+                                    <label for="contain">Select Date and Time</label>
+										  <div class="col-10">
+											<input class="form-control" type="datetime-local" id="start">
+										  </div>
+                                  <button type="submit" onclick="search();" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </form>
+                            </div>
+                        </div>
+                        <button type="button" onclick="search();" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+	</div>
 </div>
 
-<img src="img/logo.png" style="width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+<!--</div><br><br><link rel="import" href="navbar.html">-->
+
+
+<!--<img src="img/logo.png" style="width: 15%; height: 15%" alt="Rent-a-Pup logo"/>-->
+
 </body>
 </html>

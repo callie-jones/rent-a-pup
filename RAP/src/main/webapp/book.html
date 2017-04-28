@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <!--Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/test.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!--Sweet Alert-->
+    <script src="js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="css/sweetalert.css">
+	
+	<script src="signup.js"></script>
+	<script src="book.js"></script>
+    <script>
+				
+		var booked = false;
+		function bookAuth(user, billing, start, end, dog, callback){
+			var query = {};
+			query['start'] = start;
+			query['end'] = end;
+			query['dog'] = dog;
+			query['user'] = user;
+			//query['bill'] = billing;
+			console.log(query['start']);
+			console.log(query['dog']);
+           $.ajax({
+				url:"/book",
+				type:'POST',
+				data: JSON.stringify(query),
+				dataType: 'text',
+				success:  function(data) {
+					callback(data);
+				 },
+				error: function(ts) {
+					alert(ts.responseText);
+				 }
+				});
+		}
+
+        function book(){
+				var user = document.getElementById('user').value;
+				var billing = document.getElementById('billing').value;
+				//var date = document.getElementById('date').value;
+				var start = document.getElementById('start').value;
+				var end = document.getElementById('end').value;
+				var dog = document.getElementById('dog').value;
+				bookAuth(user, billing, start, end, dog, function(data) {
+					console.log(data);
+					console.log(data.length);
+		            if(data === "null"){
+                        console.log("3");
+						setTimeout(function(){ swal({ title:"Booking Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+					}
+					else {
+						console.log("2");
+						booked = true;
+						setTimeout(function(){ swal({ title:"Booking Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+					}
+				});
+		}
+
+    </script>
+
+</head>
+
+<body>
+<div class="topnav" id="NavBar">
+    <a href="index.html">Home</a>
+    <a href="index.html" style="text-align:right;" onclick="loginPopUp();">Login</a>
+    <a href="profile.html" onclick="window.location.href='profile.html'">Profile</a>
+	<a href="pups.html">Meet The Pups!</a>
+</div><br>
+
+<form class="form-horizontal" role="form" action="#">
+ <div class="form-group">
+    <label for="user">Enter Your username</label>
+    <input type="text" class="form-control" id="user" placeholder="Enter Your First Name">
+
+    <label for="filter">Select Dog</label>
+		<select class="form-control" id='dog'>
+		    <option>Select Dog Name</option>
+		    <option>Elijah</option>
+		    <option>Elias</option>
+		    <option>Max</option>
+		    <option>Callie</option>
+		</select>
+		
+		<label for="date">Enter Start Date and Time</label>
+		<div class="container">
+			<div class="row">
+				<div class='col-sm-6'>
+				    <div class="form-group">
+				        <div class='input-group date' id='datetimepicker1'>
+				            <input type='text' class="form-control" id='start' />
+				            <span class="input-group-addon">
+				                <span class="glyphicon glyphicon-calendar"></span>
+				            </span>
+				        </div>
+				    </div>
+				</div>
+				<script type="text/javascript">
+				    $(function () {
+				        $('#datetimepicker1').datetimepicker({
+							format : 'YYYY-MM-DD h:mm'
+						});
+				    });
+				</script>
+			</div>
+		</div>
+	
+		<label for="date">Enter End Date and Time</label>
+		<div class="container">
+			<div class="row">
+				<div class='col-sm-6'>
+				    <div class="form-group">
+				        <div class='input-group date' id='datetimepicker2'>
+				            <input type='text' class="form-control" id='end'  />
+				            <span class="input-group-addon">
+				                <span class="glyphicon glyphicon-calendar"></span>
+				            </span>
+				        </div>
+				    </div>
+				</div>
+				<script type="text/javascript">
+				    $(function () {
+				        $('#datetimepicker2').datetimepicker({
+							format : 'YYYY-MM-DD h:mm',
+						});
+				    });
+				</script>
+			</div>
+		</div>
+
+	<label for="billAddr">Enter Your Billing Information</label>
+    <input type="text" class="form-control" id="billing" placeholder="Enter Your Billing Address">
+
+	 <button type="submit" class="btn btn-submit" onclick="book();">Book Now!</button>
+
+
+</div>
+</form>
+
+
+
+
+
+
+
+
+</body>
+</html>
