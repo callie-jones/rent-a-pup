@@ -29,9 +29,10 @@
         var current_location = "currentlocation";
         var current_description = "currentdescription";
 
-        function getUserInfo(variable){
+        function getUserInfo(email, pass){
             var query = {};
-			query['id'] = variable.replace(/\"/g, "");
+			query['user'] = email;
+			query['pass'] = pass;
 			$.ajax({
 				url:"/profile",
 				type:'POST',
@@ -39,7 +40,7 @@
 				dataType: 'text',
 				success:  function(data) {
                     console.log(data);
-                    current_name = data.getElementByID('name').value;
+                    current_name = data['name'].value;
 				 }
 				});
         }
@@ -54,7 +55,6 @@
 				dataType: 'text',
 				success:  function(data) {
 					callback(data);
-					getUserInfo(data);
 				 },
 				error: function(ts) {
 					alert(ts.responseText);
@@ -164,6 +164,7 @@
 <p id="description"></p>
 
 <script>
+    userAuth("calvins", "jones", NULL)
     document.getElementById("profile_name").innerHTML += current_name + ": " + current_age;
     document.getElementById("location").innerHTML += current_location;
     document.getElementById("description").innerHTML += current_description;
