@@ -25,7 +25,112 @@
 	
 
     <script>		
+        function getUserInfo(variable){
+            var query = {};
+            query['id'] = variable.replace(/\"/g, "");
+            $.ajax({
+                url:"/profile",
+                type:'POST',
+                data: JSON.stringify(query),
+                dataType: 'text',
+                success:  function(data) {
+                    console.log(data);
+                 }
+                });
+        }
 
+        function userAuth(email, pass, callback){
+            var query = {};
+            query['user'] = email;
+            query['pass'] = pass;
+
+           $.ajax({
+                url:"/auth",
+                type:'POST',
+                data: JSON.stringify(query),
+                dataType: 'text',
+                success:  function(data) {
+                    callback(data);
+                    getUserInfo(data);
+                 },
+                error: function(ts) {
+                    alert(ts.responseText);
+                 }
+                });
+        }
+
+        function loginPopUp(){
+            swal({
+                title: "Please Login",
+                text: "Email: <input id='email' type='text'><br>Password:<input id='password' type='password'>",
+                html: true,
+                showCancelButton:true,
+                cancelButtonText: "Cancel",
+                confirmButtonText: "Login",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+                allowOutsideClick: true,
+                animation: true,
+            },
+            function(){
+                var pass = document.getElementById('password').value;
+                var email = document.getElementById('email').value;
+                if(pass === "" || email === "") {
+                    swal.showInputError("Please Enter Email and Password");
+                    console.log("1");
+                }
+                userAuth(email, pass, function(data) {
+                    console.log(data);
+                    console.log(data.length);
+                    if(data === "null"){
+                        console.log("3");
+                        setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+                    }
+                    else {
+                        console.log("2");
+                        setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+                    }
+                });
+            });
+        }
+        function search(){
+                //var user = document.getElementById('user').value;
+                //var billing = document.getElementById('billing').value;
+                //var date = document.getElementById('date').value;
+                var dog = document.getElementById('dog').value;
+                bookAuth( dog, function(data) {
+                    console.log(data);
+                    console.log(data.length);
+                    if(data === "null"){
+                        setTimeout(function(){ swal({ title:"Search Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+                    }
+                    else {
+                        setTimeout(function(){ swal({ title:"Search Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+                    }
+                });
+        }
+        function searchAuth(start, end, dog, callback){
+            var query = {};
+            query['start'] = start;
+            query['end'] = end;
+            query['dog'] = dog;
+            //query['user'] = user;
+            //query['bill'] = billing;
+            console.log(query['start']);
+            console.log(query['dog']);
+           $.ajax({
+                url:"/search",
+                type:'POST',
+                data: JSON.stringify(query),
+                dataType: 'text',
+                success:  function(data) {
+                    callback(data);
+                 },
+                error: function(ts) {
+                    alert(ts.responseText);
+                 }
+                });
+        }
     </script>
 
 </head>
@@ -33,9 +138,9 @@
 <body>
 <div class="topnav" id="NavBar">
     <a href="index.html">Home</a>
-    <a href="index.html" onclick="login();">Login</a>
-    <a href="profile.html" onclick="window.location.href='profile.html'">Profile</a>
-	<a href="pups.html">Meet The Pups!</a>
+    <a href="#" onclick="window.location.href='profile.html'">Profile</a>
+    <a href="pups.html" onclick="window.location.href='pups.html'">Meet The Pups!</a>
+    <a href="#" onclick="login();">Login</a>
 	
 	<div class="container" id="search">
 	<div class="row">
