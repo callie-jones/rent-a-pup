@@ -92,21 +92,25 @@
 				});
 			});
 		}
+		function bookAuth(dog){
+			console.log(dog);
+			console.log(dog.length);
+            if(dog === "null"){
+				setTimeout(function(){ swal({ title:"Search Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+			}
+			else {
+				setTimeout(function(){ swal({ title:"Search Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+				$(document).ready(function(){
+			        $("#profile_name").text("Hello world!");
+				});
+			}
+		};
 		function search(){
 				//var user = document.getElementById('user').value;
 				//var billing = document.getElementById('billing').value;
 				//var date = document.getElementById('date').value;
 				var dog = document.getElementById('dog').value;
-				bookAuth( dog, function(data) {
-					console.log(data);
-					console.log(data.length);
-		            if(data === "null"){
-						setTimeout(function(){ swal({ title:"Search Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
-					}
-					else {
-						setTimeout(function(){ swal({ title:"Search Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
-					}
-				});
+				bookAuth(dog);
 		}
 
     </script>
@@ -125,13 +129,13 @@
 	<div class="row">
 		<div class="col-md-12">
             <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for a pup!" />
+                <input type="text" class="form-control" placeholder="Search for a pup!" id="dog"/>
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form" id="dog">
+                                <form class="form-horizontal" role="form">
                                 
                                   <div class="form-group">
                                     <label for="filter">Dog Name</label>
@@ -161,7 +165,7 @@
 </div>
 
 <div>
-    <h2>Profile_Name: </h2><p id="profile_name"></p>
+    <h2>Profile_Name: <h3 id="profile_name"></h3></h2>
     <h3>Age</h3><p id="age"></p>
     <h3>Location</h3><p id="location"></p>
     <p id="description">Description.</p>
