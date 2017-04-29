@@ -49,6 +49,7 @@ form label{
 
 label, input {
 	display: block;
+	position: center;
 }   
   
 label {

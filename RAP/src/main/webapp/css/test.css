@@ -6,6 +6,7 @@
 }
 .input-group-btn .btn-group {
     display: flex !important;
+    position: center;
 }
 .btn-group .btn {
     border-radius: 0;
