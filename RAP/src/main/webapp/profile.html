@@ -92,6 +92,22 @@
 				});
 			});
 		}
+		function search(){
+				//var user = document.getElementById('user').value;
+				//var billing = document.getElementById('billing').value;
+				//var date = document.getElementById('date').value;
+				var dog = document.getElementById('dog').value;
+				bookAuth( dog, function(data) {
+					console.log(data);
+					console.log(data.length);
+		            if(data === "null"){
+						setTimeout(function(){ swal({ title:"Search Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+					}
+					else {
+						setTimeout(function(){ swal({ title:"Search Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
+					}
+				});
+		}
 
     </script>
 
@@ -101,9 +117,9 @@
 
 <div class="topnav" id="NavBar">
     <a href="index.html">Home</a>
-    <a href="index.html" onclick="login();">Login</a>
-    <a href="profile.html" onclick="window.location.href='profile.html'">Profile</a>
-	<a href="pups.html">Meet The Pups!</a>
+    <a href="#" onclick="window.location.href='profile.html'">Profile</a>
+	<a href="pups.html" onclick="window.location.href='pups.html'">Meet The Pups!</a>
+	<a href="#" onclick="login();">Login</a>
 	
 	<div class="container" id="search">
 	<div class="row">
@@ -115,7 +131,7 @@
                         <div class="dropdown dropdown-lg">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
+                                <form class="form-horizontal" role="form" id="dog">
                                 
                                   <div class="form-group">
                                     <label for="filter">Dog Name</label>
@@ -125,21 +141,7 @@
                                         <option>Calvin</option>
                                         <option>Callie</option>
                                     </select>
-                                  </div>
-                                  
-                                 	<div class="form-group">
-                                    <label for="contain">Select Date and Time</label>
-										  <div class="col-10">
-											<input class="form-control" type="datetime-local" id="start">
-										  </div>	
-									</div>						  
-									
-                                  <!--<button type="submit" onclick="search();" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>-->
-                                  
-                                  <div class="form-group">
-                                    <label for="something">Enter Something Else</label>
-    								<input type="text" class="form-control" id="idk" placeholder="something here">
-                                  </div>
+                                  </div>					  
                                   
                                   
                                 </form>                         
@@ -159,8 +161,10 @@
 </div>
 
 <div>
-    <h2>Profile_Name: <h3>Age, </h3><h4>Location</h4></h2>
-    <p>Description.</p>
+    <h2>Profile_Name: </h2><p id="profile_name"></p>
+    <h3>Age</h3><p id="age"></p>
+    <h3>Location</h3><p id="location"></p>
+    <p id="description">Description.</p>
 </div>
 
 </body>
