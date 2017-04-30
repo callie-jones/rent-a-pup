@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -22,6 +23,7 @@
 	
 	<script src="js/signup.js"></script>
 	<script src="js/login.js"></script>
+	<script src="js/search.js"></script>
 	
 
     <script>		
@@ -93,44 +95,7 @@
                 });
             });
         }
-        function search(){
-                //var user = document.getElementById('user').value;
-                //var billing = document.getElementById('billing').value;
-                //var date = document.getElementById('date').value;
-                var dog = document.getElementById('dog').value;
-                bookAuth( dog, function(data) {
-                    console.log(data);
-                    console.log(data.length);
-                    if(data === "null"){
-                        setTimeout(function(){ swal({ title:"Search Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
-                    }
-                    else {
-                        setTimeout(function(){ swal({ title:"Search Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
-                    }
-                });
-        }
-        function searchAuth(start, end, dog, callback){
-            var query = {};
-            query['start'] = start;
-            query['end'] = end;
-            query['dog'] = dog;
-            //query['user'] = user;
-            //query['bill'] = billing;
-            console.log(query['start']);
-            console.log(query['dog']);
-           $.ajax({
-                url:"/search",
-                type:'POST',
-                data: JSON.stringify(query),
-                dataType: 'text',
-                success:  function(data) {
-                    callback(data);
-                 },
-                error: function(ts) {
-                    alert(ts.responseText);
-                 }
-                });
-        }
+
     </script>
 
 </head>
@@ -156,7 +121,7 @@
                                 
                                   <div class="form-group">
                                     <label for="filter">Dog Name</label>
-                                    <select class="form-control">
+                                    <select class="form-control" id="dog">
                                         <option>Max</option>
                                         <option>Elias</option>
                                         <option>Calvin</option>
