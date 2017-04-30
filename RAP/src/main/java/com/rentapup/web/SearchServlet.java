@@ -19,24 +19,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.QueryBuilder;
-import com.rentapup.web.obj.Query;
-import org.bson.types.ObjectId;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 /**
  * Created by callie on 4/26/17.
  */
@@ -61,11 +43,14 @@ public class SearchServlet extends HttpServlet {
         DBCollection userCol = ((MongoClient) request.getServletContext().getAttribute("MONGO_CLIENT"))
                 .getDB("rapTest").getCollection("renterData");
         response.setContentType("text");
+        System.out.println(query.get("qType"));
 
-        if(query.get("type") == "byTime") {
-            mapper.writeValue(response.getOutputStream(), QueryHelper.searchBooking(bookCol, dogCol, userCol, query.get("start"), query.get("dog")));
+        if(query.get("qType").equals("byTime")) {
+            mapper.writeValue(response.getOutputStream(), QueryHelper.searchByTime(bookCol, dogCol, query.get("dog"), query.get("start"), query.get("end")));
         }
-        mapper.writeValue(response.getOutputStream(), QueryHelper.searchBooking(bookCol, dogCol, userCol, query.get("start"), query.get("dog")));
+        else {
+            mapper.writeValue(response.getOutputStream(), QueryHelper.searchByDog(bookCol, dogCol, query.get("dog")));
+        }
     }
 }
 

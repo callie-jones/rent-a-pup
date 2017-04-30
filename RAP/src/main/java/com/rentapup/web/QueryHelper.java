@@ -1,9 +1,6 @@
 package com.rentapup.web;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
+import com.mongodb.*;
 import com.rentapup.web.obj.Booking;
 import com.rentapup.web.obj.Query;
 import com.rentapup.web.obj.Renter;
@@ -15,7 +12,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by elijahstaple on 4/22/17.
@@ -45,15 +45,9 @@ class QueryHelper {
 
         ObjectId dogId = DBHandling.getDogId(dogData, dog);
         ObjectId renterId = DBHandling.getRenterId(renterData, user);
-        Date startDate = DBHandling.getStartDate(start);
-        Date endDate = DBHandling.getEndDate(end);
+        Date startDate = DBHandling.getDate(start);
+        Date endDate = DBHandling.getDate(end);
 
-        //TODO fix overlap booking
-//        DBObject currentBookings = QueryBuilder.start("startTime").lessThan(startDate).and("startTime").lessThan(endDate).and("endTime").greaterThan(startDate).and("endTime").greaterThan(endDate).and("dogId").is(dogId).get();
-//        DBCursor cursor = bookingData.find(currentBookings);
-//        if(cursor.count() > 0){
-//            return null;
-//        }
         if(dogAvailable(dogData, bookingData, dog, start, end) == "Success") {
             Booking booking = new Booking(startDate, endDate, dogId, renterId);
             bookingData.insert(booking);
@@ -64,8 +58,8 @@ class QueryHelper {
 
     static String dogAvailable(DBCollection dogData, DBCollection bookingData, String dogName, String start, String end){
         ObjectId dogId = DBHandling.getDogId(dogData, dogName);
-        Date startDate = DBHandling.getStartDate(start);
-        Date endDate = DBHandling.getEndDate(end);
+        Date startDate = DBHandling.getDate(start);
+        Date endDate = DBHandling.getDate(end);
 
         //start time occurs during existing booking
         DBObject sdm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).and("dogId").is(dogId).get();
@@ -86,8 +80,89 @@ class QueryHelper {
         return "Success";
     }
 
-    static String searchBooking(DBCollection bookingData, DBCollection dogData, DBCollection renterData, String start, String dog){
-        //search available bookings for given dog or available dogs for given start time
+    static List<String> searchByDog(DBCollection bookingData, DBCollection dogData, String dogName){
+        /*//search available bookings for given dog or available dogs for given start time
+        ObjectId dogId = DBHandling.getDogId(dogData, dogName);
+        DBObject search = QueryBuilder.start("dogId").is(dogId).get();
+        DBCursor cursor = bookingData.find(search, QueryBuilder.start("_id").is(0).and("startTime").is(1).and("endTime").is(1).get()).sort(new BasicDBObject("startTime", 1));
+        List<Date> startTimes = new ArrayList<Date>();
+        List<Date> endTimes = new ArrayList<Date>();
+        List<String> availableStart = new ArrayList<>();
+        List<String> availableEnd = new ArrayList<>();
+
+        while(cursor.hasNext()){
+            System.out.println(cursor.next());
+
+            Date start = (Date) cursor.curr().get("startTime");
+            Date end = (Date) cursor.curr().get("endTime");
+            startTimes.add(start);
+            endTimes.add(end);
+
+            System.out.println(startTimes);
+            System.out.println(endTimes);
+        }
+        //compare dates to get availability
+        long beginTime = 10;
+        long finalTime = 20;
+        Date first = startTimes.get(0);
+        first.setHours(10);
+        first.setMinutes(00);
+        first.setSeconds(00);
+
+        long before = startTimes.get(0).getTime() - beginTime;
+        long last = finalTime - endTimes.get(endTimes.size()-1).getTime();
+
+        System.out.print("before:::");
+        System.out.println(before);
+
+        System.out.print("first-time-set:::");
+        System.out.println(first);
+        if(before > 60){
+            availableStart.add(first.toString());
+            System.out.println(availableStart);
+            //availableEnd.add(startTimes.get(0));
+        }
+
+        for (int i=1; i<startTimes.size(); i++){
+            Date sTime = startTimes.get(i);
+            Date eTime = endTimes.get(i-1);
+            long diff = sTime.getTime() - eTime.getTime();
+            long diffMins = TimeUnit.MILLISECONDS.toMinutes(diff);
+            //.setTime(eTime.getTime())
+            System.out.println(sTime);
+            System.out.println(eTime);
+            System.out.println(diffMins);
+            System.out.println(eTime.getDate());
+            //System.out.println(eTime.getDay());
+            System.out.println(sTime.getDate());
+            System.out.println("test");
+            System.out.println(diffMins);
+            System.out.println(eTime.getDate());
+            System.out.println(sTime.getDate());
+            System.out.println("end");
+
+            if(diffMins > 60 && eTime.getDate() == sTime.getDate()) { //
+                Date aStart = eTime; //+15min
+                Date aEnd = sTime; //-15 min
+                System.out.println("aStart"); //add to list
+                System.out.println(aStart);
+                System.out.println(aEnd);
+                //availableStart.add(sTime);
+               // availableEnd.add(eTime);
+            }
+
+        }
+
+        return availableStart;*/ return null;
+    }
+
+    static String searchByTime(DBCollection bookingData, DBCollection dogData, String dog, String start, String end){
+
+        if(dogAvailable(dogData, bookingData, dog, start, end) == "Success"){
+            String returning = String.format("The dog %s is available from %s to %s", dog, DBHandling.getDate(start), DBHandling.getDate(end));
+            return returning;
+        }
+
         return null;
     }
 

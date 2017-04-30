@@ -15,6 +15,8 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 
 /**
@@ -38,22 +40,13 @@ public class DBHandling {
         return renterId;
     }
 
-    static Date getStartDate(String start){
+    static Date getDate(String time){
+               
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd h:mm");
+        //DateFormat format = new SimpleDateFormat("yyyy-MM-dd h:mm");
         try {
-            Date startDate = formatter.parse(start);
-            return startDate;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    static Date getEndDate(String end){
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd h:mm");
-        try {
-            Date endDate = formatter.parse(end);
-            return endDate;
+            Date newDate = formatter.parse(time);
+            return newDate;
         } catch (ParseException e) {
             e.printStackTrace();
         }
