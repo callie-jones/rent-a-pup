@@ -51,7 +51,7 @@ public class BookServlet extends HttpServlet {
         }
         //cancelBooking
         else { //if(query.get("qType") == "cancelBooking") {
-            mapper.writeValue(response.getOutputStream(), QueryHelper.addBooking(bookCol,  dogCol, userCol, query.get("start"), query.get("end"), query.get("dog"), query.get("user")));
+            mapper.writeValue(response.getOutputStream(), QueryHelper.cancelBooking(bookCol, query.get("bookId")));
         }
     }
 }
