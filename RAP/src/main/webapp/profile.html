@@ -91,8 +91,8 @@
                                     var end = new Date(bookinfo["endTime"]["$date"]);
                                     var entry = info["dogNames"][i] + ": " + start + " -> " + end;
                                     var bookId = bookinfo["_id"]["$oid"];
-                                    var but = "<button type=\"button\" href=\"#\" onclick=\"cancel(";
-                                    var ton = ")\" class=\"btn btn-primary\" >Cancel</button>";
+                                    var but = "<button type=\"button\" href=\"index.html\" onclick=cancel(\"";
+                                    var ton = "\") class=\"btn btn-primary\" >Cancel</button>";
                                     var button =  but + bookId + ton;
                                     document.getElementById("bookings").outerHTML += "<p align=\"left\">" + entry + button + "</p>";
                                 }
