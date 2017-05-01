@@ -2,10 +2,12 @@ package com.rentapup.web;
 
 import com.mongodb.*;
 import com.rentapup.web.obj.Booking;
+import com.rentapup.web.obj.Dog;
 import com.rentapup.web.obj.Query;
 import com.rentapup.web.obj.Renter;
 import org.bson.types.ObjectId;
 
+import java.awt.print.Book;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -139,7 +141,7 @@ class QueryHelper {
         return renter.getid().toHexString();
     }
 
-    static Query renterProfile(DBCollection col, String id) {
+    static Query<String, Object> renterProfile(DBCollection col, String id) {
         Query<String, Object> results;
         DBObject query = QueryBuilder.start("_id").is(new ObjectId(id)).and("type").is(2).get();
         DBCursor cursor = col.find(query);
@@ -153,6 +155,33 @@ class QueryHelper {
             results.put("location", renter.getlocation().toString());
         } else {
             results = null;
+        }
+        return results;
+    }
+
+    static Query<String, ArrayList> getRenterBookings(DBCollection bookingData, String renterId) {
+        Query<String, ArrayList> results = new Query<>();
+        ArrayList<String> res1 = new ArrayList<>();
+        ArrayList<String> res2 = new ArrayList<>();
+        DBObject searchquery = QueryBuilder.start("renterId").is(renterId).get();
+        DBCursor cursor = bookingData.find(searchquery);
+        while(cursor.hasNext()) {
+            System.out.println(((ObjectId) cursor.next().get("dogId")).toHexString());
+            res1.add(cursor.curr().toString());
+            res2.add(((ObjectId) cursor.curr().get("dogId")).toHexString());
+        }
+        results.put("1", res1);
+        results.put("2", res2);
+        return results;
+    }
+
+    static ArrayList<String> getDogNames(DBCollection dogData, ArrayList<String> bookings) {
+        ArrayList<String> results = new ArrayList<>();
+        for (String booking : bookings) {
+            DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(booking)).get();
+            DBCursor cursor = dogData.find(searchquery);
+            if (cursor.hasNext())
+                results.add(((BasicDBObject) cursor.next()).getString("name"));
         }
         return results;
     }
