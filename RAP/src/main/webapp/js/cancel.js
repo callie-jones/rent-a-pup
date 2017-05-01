@@ -18,8 +18,8 @@
 				});
 		}
 
-        function cancel(){
-				var bookId = document.getElementById('bookId').value;
+        function cancel(bookId){
+				//var bookId = document.getElementById('bookId').value;
 				cancelAuth(bookId, function(data) {
 					console.log(data);
 					console.log(data.length);
