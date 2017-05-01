@@ -84,7 +84,7 @@
                                 document.getElementById("profile_name").innerHTML = info["name"] + ": ";
                                 document.getElementById("profile_name").innerHTML += info["age"] + "yrs";
                                 document.getElementById("description").innerHTML = info["description"];
-                                for(i = 0; i < 25; i++){
+                                for(i = 0; i < info["bookings"].length; i++){
                                     var temp = info["bookings"][i].substring(0, info["bookings"][i].length).replace(/\\/g, "");
                                     var bookinfo = JSON.parse(temp);
                                     var start = new Date(bookinfo["startTime"]["$date"]);
