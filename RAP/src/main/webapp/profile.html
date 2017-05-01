@@ -80,8 +80,8 @@
                             success:  function(data) {
                                 console.log(data);
                                 var info = JSON.parse(data);
-                                document.getElementById("profile_name").innerHTML = info["name"];
-                                document.getElementById("profile_age").innerHTML = info["age"];
+                                document.getElementById("profile_name").innerHTML = info["name"] + ": ";
+                                document.getElementById("profile_name").innerHTML += info["age"] + "yrs";
                                 document.getElementById("description").innerHTML = info["description"];
                              },
                              error: function(ts) {
@@ -178,12 +178,14 @@
 </div>
 
 <div>
-	<img src="img/cartoonDog.jpg" style="width: 25%; height: 25%" align="right" alt="Rent-a-Pup logo"/>
+
+    <font size="7"><p align="center" id="profile_name"></p></font>
+    <font size="5"><p align="center" id="description"></p></font>
+    <img src="img/cartoonDog.jpg" style="float: left; width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+    <img src="img/cartoonDog.jpg" style="float: right; width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
 </div>
 
-<font size="7"><p id="profile_name"></p></font>
-<font size="5"><p id="profile_age"></p></font>
-<font size="3"><p id="description"></p></font>
+
 
 </body>
 </html>
