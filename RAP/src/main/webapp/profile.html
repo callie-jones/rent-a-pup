@@ -23,6 +23,7 @@
 	<script src="js/login.js"></script>
     <script src="js/profileDisplay.js"></script>
 	<script src="js/search.js"></script>
+    <script src="js/cancel.js"></script>
 
     <script>
         function profileAuth(email, pass, callback){
@@ -89,6 +90,7 @@
                                     var start = new Date(bookinfo["startTime"]["$date"]);
                                     var end = new Date(bookinfo["endTime"]["$date"]);
                                     var entry = info["dogNames"][i] + ": " + start + " -> " + end;
+                                    //var button = <button type="button" href="#" onclick="cancel()" class="btn btn-primary" >Cancel</button>;
                                     document.getElementById("bookings").outerHTML += "<p align=\"middle\">" + entry + "</p>";
                                 }
                              },
