@@ -126,11 +126,9 @@ class QueryHelper {
                     cursor.next();
                     for (String mapId: myMap.keySet()) {
                         if(((ObjectId) cursor.curr().get("dogId")).toHexString().equals(mapId)){
-                            System.out.print("asdf");
                             myMap.remove(mapId);
                             break;
                         }
-                        System.out.println("Dammit");
                         count++;
                     }
                 }
