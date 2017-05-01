@@ -1,6 +1,6 @@
 
 var loggedin = false;
-		function profileAuth(email, pass, callback){
+		function quickProfileAuth(email, pass, callback){
 			var query = {};
 			query['user'] = email;
 			query['pass'] = pass;
@@ -17,7 +17,7 @@ var loggedin = false;
 				 }
 				});
 		}
-		function profileDisplay(){
+		function quickProfileDisplay(){
                     swal({
                         title: "Please Login to Display Profile Info",
                         text: "Email: <input id='email' type='text'><br>Password:<input id='password' type='password'><br><a href='#' style='color:#59C1F1' onclick='signUp();'>Dont Have An Account?</a><br>",
@@ -37,7 +37,7 @@ var loggedin = false;
                             swal.showInputError("Please Enter Email and Password");
                             console.log("1");
                         }
-                        profileAuth(email, pass, function(data) {
+                        quickProfileAuth(email, pass, function(data) {
                             console.log(data);
                             console.log(data.length);
                             if(data === "null"){
