@@ -31,6 +31,13 @@ public class DBHandling {
         ObjectId dogId = (ObjectId) dogcursor.one().get("_id");
         return dogId;
     }
+    static String getDogName(DBCollection dogData, ObjectId dogId){
+
+        DBObject searchquery = QueryBuilder.start("_id").is(dogId).get();
+        DBCursor dogcursor = dogData.find(searchquery);
+        String dogName = dogcursor.one().get("name").toString();
+        return dogName;
+    }
 
     static ObjectId getRenterId(DBCollection renterData, String renterName){
 
