@@ -63,21 +63,22 @@ public abstract class TestDB {
                 "benw", "sarahc", "jakew", "carlyi", "danp", "jayneo", "timn", "lauram", "jackv", "timothyj", "sophiep",
                 "hannahs", "eliaso", "calliej", "calvins", "elenaz", "austinm", "xandrar", "leroyj")));
 
+        Renter testRenter = new Renter("Callie",
+                ((ArrayList<Integer>) renters.get(1)).get((int)(Math.random() * 10)), "I'm a renter lol",
+                System.getProperty("user.dir") + "/assets/images/tiny.png");
+        renterData.insert(testRenter, WriteConcern.ACKNOWLEDGED);
+        UserAuthData testAuthData = new UserAuthData("calliej", "jones", testRenter.getid());
+        authData.insert(testAuthData, WriteConcern.ACKNOWLEDGED);
+
         for(int i = 0; i < 25; i++) {
             Dog testDog = new Dog(((ArrayList<String>) dogs.get(0)).get((int)(Math.random() * 14)),
                     ((ArrayList<String>) dogs.get(1)).get(i),
                     ((ArrayList<Integer>) dogs.get(2)).get((int)(Math.random() * 10)), "I'M A DAWWWG",
                     System.getProperty("user.dir") + "/assets/images/tiny.png");
             dogData.insert(testDog, WriteConcern.ACKNOWLEDGED);
-            Renter testRenter = new Renter(((ArrayList<String>) renters.get(0)).get(i),
-                    ((ArrayList<Integer>) renters.get(1)).get((int)(Math.random() * 10)), "I'm a renter lol",
-                    System.getProperty("user.dir") + "/assets/images/tiny.png");
-            renterData.insert(testRenter, WriteConcern.ACKNOWLEDGED);
-            UserAuthData testAuthData = new UserAuthData(((ArrayList<String>) renters.get(2)).get(i),
-                    "jones", testRenter.getid());
-            authData.insert(testAuthData, WriteConcern.ACKNOWLEDGED);
             long time = System.currentTimeMillis() + 1800 * i * 1000;
-            Booking booking = new Booking(new Date(time), new Date(time + 7200 * 1000), testDog.getid(), testRenter.getid());
+            Booking booking =
+                    new Booking(new Date(time), new Date(time + 7200 * 1000), testDog.getid(), testRenter.getid());
             bookingData.insert(booking, WriteConcern.ACKNOWLEDGED);
         }
     }

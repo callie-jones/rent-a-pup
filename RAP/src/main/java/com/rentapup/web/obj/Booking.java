@@ -10,19 +10,17 @@ import java.util.Date;
 /**
  * Created by elijahstaple on 4/15/17.
  */
-public class Booking extends ReflectionDBObject implements hasId, hasLocation {
+public class Booking extends ReflectionDBObject implements hasId {
     private int type;
     private Date startTime, endTime;
-    private ObjectId dogId, renterId;
-    private BasicDBObject location;
+    private String dogId, renterId;
 
     public Booking(Date startTime, Date endTime, ObjectId dogId, ObjectId renterId) {
         this.type = Type.BOOKING;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.dogId = dogId;
-        this.renterId = renterId;
-        this.location = Location.newLocation();
+        this.dogId = dogId.toHexString();
+        this.renterId = renterId.toHexString();
         this.set_id(new ObjectId());
     }
 
@@ -31,9 +29,8 @@ public class Booking extends ReflectionDBObject implements hasId, hasLocation {
         this.type = b.getInt("type");
         this.startTime = b.getDate("startTime");
         this.endTime = b.getDate("endTime");
-        this.dogId = b.getObjectId("dogId");
-        this.renterId = b.getObjectId("renterId");
-        this.location = (BasicDBObject) b.get("location");
+        this.dogId = b.getObjectId("dogId").toHexString();
+        this.renterId = b.getObjectId("renterId").toHexString();
         this.set_id(b.getObjectId("_id"));
     }
 
@@ -66,26 +63,18 @@ public class Booking extends ReflectionDBObject implements hasId, hasLocation {
     }
 
     public ObjectId getdogId() {
-        return dogId;
+        return new ObjectId(dogId);
     }
 
     public void setdogId(ObjectId dogId) {
-        this.dogId = dogId;
+        this.dogId = dogId.toHexString();
     }
 
-    public ObjectId getrenterId() {
+    public String getrenterId() {
         return renterId;
     }
 
     public void setrenterId(ObjectId renterId) {
-        this.renterId = renterId;
-    }
-
-    public BasicDBObject getlocation() {
-        return location;
-    }
-
-    public void setlocation(BasicDBObject loc) {
-        this.location = loc;
+        this.renterId = renterId.toHexString();
     }
 }
