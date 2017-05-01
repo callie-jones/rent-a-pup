@@ -140,16 +140,36 @@
                       
                         <div class="form-group">
                         <label for="contain">Select Start Date and Time</label>
-                              <div class="col-10">
-                                <input class="form-control" type="datetime-local" id="searchStart">
-                              </div>    
+                              <div class="col-10 date input-group" id="datetimepicker1">
+                                <input class="form-control" id="searchStart">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                              </div>   
+                              <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker({
+                            format : 'YYYY-MM-DD h:mm'
+                        });
+                    });
+                </script> 
                         </div>
                         
                         <div class="form-group">
                         <label for="contain">Select End Date and Time</label>
-                              <div class="col-10">
-                                <input class="form-control" type="datetime-local" id="searchEnd">
-                              </div>    
+                              <div class="col-10 date input-group" id="datetimepicker2">
+                                <input class="form-control" id="searchEnd">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                              </div>   
+                              <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker2').datetimepicker({
+                            format : 'YYYY-MM-DD h:mm',
+                        });
+                    });
+                </script> 
                         </div>                    
                       
                       <div class="form-group">
