@@ -40,6 +40,8 @@ public class DBHandling {
         return renterId;
     }
 
+
+
     static Date getDate(String time){
                
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd h:mm");

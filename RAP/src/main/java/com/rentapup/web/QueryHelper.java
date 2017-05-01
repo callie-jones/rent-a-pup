@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -154,6 +155,15 @@ class QueryHelper {
         }
 
         return availableStart;*/ return null;
+    }
+
+    static String cancelBooking(DBCollection bookingData, String bookingId){
+        ObjectId id = new ObjectId(bookingId);
+        DBObject searchquery = QueryBuilder.start("_id").is(id).get();
+        DBObject remove = bookingData.find(searchquery).one();
+        DBCursor cursor = bookingData.find(searchquery);
+        System.out.print(remove);
+        return null;
     }
 
     static String searchByTime(DBCollection bookingData, DBCollection dogData, String dog, String start, String end){
