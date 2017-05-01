@@ -1,6 +1,7 @@
 		var booked = false;
 		function bookAuth(user, billing, start, end, dog, callback){
 			var query = {};
+			query['qType'] = "addBooking";
 			query['start'] = start;
 			query['end'] = end;
 			query['dog'] = dog;
