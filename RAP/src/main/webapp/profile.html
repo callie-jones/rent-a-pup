@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-
     <!--Jquery-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
@@ -26,27 +25,7 @@
 	<script src="js/search.js"></script>
 
     <script>
-        var current_name = "currentname";
-        var current_age = "currentage";
-        var current_location = "currentlocation";
-        var current_description = "currentdescription";
-
-        function OLD_getUserInfo(id){
-            var query = {};
-			query['id'] = id;
-			$.ajax({
-				url:"/profile",
-				type:'POST',
-                data: JSON.stringify(query),
-				dataType: 'text',
-				async: false,
-				complete:  function(data) {
-                    console.log(data);
-                    current_name = data.get("name");
-				 }
-				});
-        }
-		function userAuth(email, pass, callback){
+        function profileAuth(email, pass, callback){
 			var query = {};
 			query['user'] = email;
 			query['pass'] = pass;
@@ -55,6 +34,7 @@
 				type:'POST',
 				data: JSON.stringify(query),
 				dataType: 'text',
+				async: false,
 				success:  function(data) {
 					callback(data);
 				 },
@@ -63,52 +43,66 @@
 				 }
 				});
 		}
-        function loginPopUp(){
-			swal({
-				title: "Please Login",
-				text: "Email: <input id='email' type='text'><br>Password:<input id='password' type='password'>",
-				html: true,
-				showCancelButton:true,
-				cancelButtonText: "Cancel",
-				confirmButtonText: "Login",
-				closeOnConfirm: false,
-				showLoaderOnConfirm: true,
-				allowOutsideClick: true,
-				animation: true,
-			},
-			function(){
-				var pass = document.getElementById('password').value;
-				var email = document.getElementById('email').value;
+		function profileDisplay(){
+            swal({
+                title: "Please Login to Display Profile Info",
+                text: "Email: <input id='email' type='text'><br>Password:<input id='password' type='password'><br><a href='#' style='color:#59C1F1' onclick='signUp();'>Dont Have An Account?</a><br>",
+                html: true,
+                showCancelButton:true,
+                cancelButtonText: "Cancel",
+                confirmButtonText: "Login",
+                showLoaderOnConfirm: true,
+                allowOutsideClick: true,
+                animation: true,
+            },
+            function(){
+                var pass = document.getElementById('password').value;
+                var email = document.getElementById('email').value;
                 if(pass === "" || email === "") {
                     swal.showInputError("Please Enter Email and Password");
                     console.log("1");
                 }
-				userAuth(email, pass, function(data) {
-					console.log(data);
-					console.log(data.length);
-		            if(data === "null"){
-                        console.log("3");
-						setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
-					}
-					else {
-						console.log("2");
-						setTimeout(function(){ swal({ title:"Login Complete!", type: "success", timer: 1250, showConfirmButton: false }); }, 2000);
-					}
-				});
-			});
-		}
-
+                profileAuth(email, pass, function(data) {
+                    console.log(data);
+                    console.log(data.length);
+                    if(data === "null"){
+                        setTimeout(function(){ swal({ title:"Login Error!", type: "error", timer: 1250, showConfirmButton: false }); }, 2500);
+                    }
+                    else {
+                        var query = {};
+                        query['id'] = data.replace(/\"/g, "");
+                        $.ajax({
+                            url:"/profile",
+                            type:'POST',
+                            data: JSON.stringify(query),
+                            dataType: 'text',
+                            async: false,
+                            success:  function(data) {
+                                console.log(data);
+                                var info = JSON.parse(data);
+                                document.getElementById("profile_name").innerHTML = info["name"];
+                                document.getElementById("profile_age").innerHTML = info["age"];
+                                document.getElementById("description").innerHTML = info["description"];
+                             },
+                             error: function(ts) {
+                                alert(ts.responseText);
+                             }
+                            });
+                    }
+                });
+            });
+        }
     </script>
 </head>
 
-<body>
+<body onpageshow="profileDisplay()">
 
 <div class="topnav" id="NavBar">
     <a href="index.html">Home</a>
-    <a href="#" onclick="window.location.href='profile.html'">Profile</a>
+    <a href="#" onclick="profileDisplay();">Quick Profile Info</a>
 	<a href="pups.html" onclick="window.location.href='pups.html'">Meet The Pups!</a>
 	<a href="#" onclick="login();">Login</a>
-    <a href="#" onclick="profileDisplay();">Profile</a>
+    <a href="#" onclick="window.location.href='profile.html'">Profile</a>
 
 	<div class="container" id="search">
 	<div class="row">
@@ -187,16 +181,9 @@
 	<img src="img/cartoonDog.jpg" style="width: 25%; height: 25%" align="right" alt="Rent-a-Pup logo"/>
 </div>
 
-<p id="profile_name"></p>
-<p id="location"></p>
-<p id="description"></p>
-<!--getUserInfo("58fbb24eb3aab0723d6b02a1")--->
-<script>
-
-    document.getElementById("profile_name").innerHTML += current_name + ": " + current_age;
-    document.getElementById("location").innerHTML += current_location;
-    document.getElementById("description").innerHTML += current_description;
-</script>
+<h2 id="profile_name"></h2>
+<h4 id="profile_age"></h4>
+<h6 id="description"></h6>
 
 </body>
 </html>

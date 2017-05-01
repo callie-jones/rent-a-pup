@@ -69,13 +69,6 @@ var loggedin = false;
                                         alert(ts.responseText);
                                      }
                                     });
-
-
-                                /*getUserInfo(data, function(modata)){
-                                    console.log(modata);
-                                    console.log(modata.length);
-
-                                }*/
                             }
                         });
                     });
