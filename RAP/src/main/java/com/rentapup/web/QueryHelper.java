@@ -62,13 +62,13 @@ class QueryHelper {
         Date endDate = DBHandling.getDate(end);
 
         //start time occurs during existing booking
-        DBObject sdm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).and("dogId").is(dogId).get();
+        DBObject sdm = QueryBuilder.start("startTime").lessThanEquals(startDate).and("endTime").greaterThanEquals(startDate).and("dogId").is(dogId).get();
         //existing booking ends during attempted booking
-        DBObject etm = QueryBuilder.start("endTime").greaterThan(startDate).and("endTime").lessThan(endDate).and("dogId").is(dogId).get();
+        DBObject etm = QueryBuilder.start("endTime").greaterThanEquals(startDate).and("endTime").lessThanEquals(endDate).and("dogId").is(dogId).get();
         //existing booking starts during attempted booking
-        DBObject stm = QueryBuilder.start("startTime").greaterThan(startDate).and("startTime").lessThan(endDate).and("dogId").is(dogId).get();
+        DBObject stm = QueryBuilder.start("startTime").greaterThanEquals(startDate).and("startTime").lessThan(endDate).and("dogId").is(dogId).get();
         //end time occurs during existing booking
-        DBObject edm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).and("dogId").is(dogId).get();
+        DBObject edm = QueryBuilder.start("startTime").lessThanEquals(startDate).and("endTime").greaterThanEquals(startDate).and("dogId").is(dogId).get();
 
         DBCursor sdmcursor = bookingData.find(sdm);
         DBCursor etmcursor = bookingData.find(etm);
