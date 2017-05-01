@@ -87,31 +87,55 @@ class QueryHelper {
         Date endDate = DBHandling.getDate(end);
 
         //start time occurs during existing booking
-        DBObject sdm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).get();
+        DBObject sdm = QueryBuilder.start("startTime").lessThanEquals(startDate).and("endTime").greaterThanEquals(startDate).get();
         //existing booking ends during attempted booking
-        DBObject etm = QueryBuilder.start("endTime").greaterThan(startDate).and("endTime").lessThan(endDate).get();
+        DBObject etm = QueryBuilder.start("endTime").greaterThanEquals(startDate).and("endTime").lessThanEquals(endDate).get();
         //existing booking starts during attempted booking
-        DBObject stm = QueryBuilder.start("startTime").greaterThan(startDate).and("startTime").lessThan(endDate).get();
+        DBObject stm = QueryBuilder.start("startTime").greaterThanEquals(startDate).and("startTime").lessThanEquals(endDate).get();
         //end time occurs during existing booking
-        DBObject edm = QueryBuilder.start("startTime").lessThan(startDate).and("endTime").greaterThan(startDate).get();
+        DBObject edm = QueryBuilder.start("startTime").lessThanEquals(startDate).and("endTime").greaterThanEquals(startDate).get();
 
         DBCursor sdmcursor = bookingData.find(sdm);
         DBCursor etmcursor = bookingData.find(etm);
         DBCursor edmcursor = bookingData.find(edm);
         DBCursor stmcursor = bookingData.find(stm);
 
-        DBObject searchDog = QueryBuilder.start("name").is(1).and("dogId").is(1).get();
+        DBObject searchDog = QueryBuilder.start().get();
         DBCursor dogCursor = bookingData.find(searchDog);
+        DBCursor dogNCursor = dogData.find(searchDog);
 
-        if(sdmcursor.count() > 0 || edmcursor.count() > 0 || stmcursor.count() > 0 || etmcursor.count() > 0 ){
-            return null;
-        }
-        //change this to be a list of dog IDs and query dog name.
         Map<String,String> myMap = new HashMap<String,String>();
         while(dogCursor.hasNext()){
-            String dogName = (String) dogCursor.curr().get("name");
-            String dogId = (String) dogCursor.curr().get("dogId)");
-            myMap.put(dogName, dogId);
+            String dogId = dogCursor.next().get("dogId").toString();
+            ObjectId id = new ObjectId(dogId);
+            String dogName = DBHandling.getDogName(dogData, id);
+            myMap.put(dogId, dogName);
+        }
+
+        ArrayList<DBCursor> cursors = new ArrayList<>();
+        cursors.add(sdmcursor);
+        cursors.add(etmcursor);
+        cursors.add(edmcursor);
+        cursors.add(stmcursor);
+        Integer count = 0;
+        Integer cur = 0;
+        for (DBCursor cursor: cursors) {
+            if(cursor.count() > 0) {
+                count = 0;
+                while(cursor.hasNext()){
+                    cursor.next();
+                    for (String mapId: myMap.keySet()) {
+                        if(((ObjectId) cursor.curr().get("dogId")).toHexString().equals(mapId)){
+                            System.out.print("asdf");
+                            myMap.remove(mapId);
+                            break;
+                        }
+                        System.out.println("Dammit");
+                        count++;
+                    }
+                }
+            }
+            cur++;
         }
         return myMap;
     }
@@ -129,6 +153,8 @@ class QueryHelper {
 
         if(dogAvailableByTime(dogData, bookingData, start, end) != null){
             Map<String,String> returning = dogAvailableByTime(dogData, bookingData, start, end);
+            System.out.print("returning");
+            System.out.println(returning);
             return returning;
         }
 
@@ -177,6 +203,7 @@ class QueryHelper {
 
     static ArrayList<String> getDogNames(DBCollection dogData, ArrayList<String> bookings) {
         ArrayList<String> results = new ArrayList<>();
+        Integer n = 2;
         for (String booking : bookings) {
             DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(booking)).get();
             DBCursor cursor = dogData.find(searchquery);
@@ -186,12 +213,11 @@ class QueryHelper {
         return results;
     }
 
-    static String cancelBooking(DBCollection bookingData, String bookingId){
-        ObjectId id = new ObjectId(bookingId);
-        DBObject searchquery = QueryBuilder.start("_id").is(id).get();
-        DBObject remove = bookingData.find(searchquery).one();
+    static String cancelBooking(DBCollection bookingData, String bookingId) {
+        DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(bookingId)).get();
+        bookingData.find(searchquery).remove();
         DBCursor cursor = bookingData.find(searchquery);
-        System.out.print(remove);
-        return null;
+        if(cursor.hasNext()) return "Failed";
+        return "Success";
     }
 }
