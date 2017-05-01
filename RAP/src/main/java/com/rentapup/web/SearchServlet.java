@@ -46,10 +46,10 @@ public class SearchServlet extends HttpServlet {
         System.out.println(query.get("qType"));
 
         if(query.get("qType").equals("byTime")) {
-            mapper.writeValue(response.getOutputStream(), QueryHelper.searchByTime(bookCol, dogCol, query.get("dog"), query.get("start"), query.get("end")));
+            mapper.writeValue(response.getOutputStream(), QueryHelper.searchByTime(bookCol, dogCol, query.get("start"), query.get("end")));
         }
         else {
-            mapper.writeValue(response.getOutputStream(), QueryHelper.searchByDog(bookCol, dogCol, query.get("dog")));
+            mapper.writeValue(response.getOutputStream(), QueryHelper.searchByDog(bookCol, dogCol, query.get("dog"), query.get("start"), query.get("end")));
         }
     }
 }
