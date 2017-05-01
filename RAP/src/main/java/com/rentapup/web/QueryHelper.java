@@ -177,6 +177,7 @@ class QueryHelper {
 
     static ArrayList<String> getDogNames(DBCollection dogData, ArrayList<String> bookings) {
         ArrayList<String> results = new ArrayList<>();
+        Integer n = 2;
         for (String booking : bookings) {
             DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(booking)).get();
             DBCursor cursor = dogData.find(searchquery);
@@ -186,12 +187,11 @@ class QueryHelper {
         return results;
     }
 
-    static String cancelBooking(DBCollection bookingData, String bookingId){
-        ObjectId id = new ObjectId(bookingId);
-        DBObject searchquery = QueryBuilder.start("_id").is(id).get();
-        DBObject remove = bookingData.find(searchquery).one();
+    static String cancelBooking(DBCollection bookingData, String bookingId) {
+        DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(bookingId)).get();
+        bookingData.find(searchquery).remove();
         DBCursor cursor = bookingData.find(searchquery);
-        System.out.print(remove);
-        return null;
+        if(cursor.hasNext()) return "Failed";
+        return "Success";
     }
 }
