@@ -214,7 +214,7 @@ class QueryHelper {
     }
 
     static String cancelBooking(DBCollection bookingData, String bookingId) {
-        DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(bookingId)).get();
+        DBObject searchquery = QueryBuilder.start("_id").is(new ObjectId(bookingId)).and("startDate").greaterThan(new Date(System.currentTimeMillis())).get();
         bookingData.find(searchquery).remove();
         DBCursor cursor = bookingData.find(searchquery);
         if(cursor.hasNext()) return "Failed";
