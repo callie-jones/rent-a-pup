@@ -78,11 +78,19 @@
                             dataType: 'text',
                             async: false,
                             success:  function(data) {
-                                console.log(data);
                                 var info = JSON.parse(data);
+                                console.log(info);
                                 document.getElementById("profile_name").innerHTML = info["name"] + ": ";
                                 document.getElementById("profile_name").innerHTML += info["age"] + "yrs";
                                 document.getElementById("description").innerHTML = info["description"];
+                                for(i = 0; i < 25; i++){
+                                    var temp = info["bookings"][i].substring(0, info["bookings"][i].length).replace(/\\/g, "");
+                                    var bookinfo = JSON.parse(temp);
+                                    var start = new Date(bookinfo["startTime"]["$date"]);
+                                    var end = new Date(bookinfo["endTime"]["$date"]);
+                                    var entry = info["dogNames"][i] + ": " + start + " -> " + end;
+                                    document.getElementById("bookings").outerHTML += "<p align=\"middle\">" + entry + "</p>";
+                                }
                              },
                              error: function(ts) {
                                 alert(ts.responseText);
@@ -111,8 +119,6 @@
         </div>
       </div>
 	</div>
-</div>
-
 </div>
 
 <div class="input-group" id="adv-search">
@@ -183,6 +189,8 @@
     <font size="5"><p align="center" id="description"></p></font>
     <img src="img/cartoonDog.jpg" style="float: left; width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
     <img src="img/cartoonDog.jpg" style="float: right; width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
+    <font size="3"><p align="center">Bookings: </p></font>
+    <font size="3"><p align="center" id="bookings"></p></font>
 </div>
 
 
