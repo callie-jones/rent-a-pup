@@ -90,8 +90,11 @@
                                     var start = new Date(bookinfo["startTime"]["$date"]);
                                     var end = new Date(bookinfo["endTime"]["$date"]);
                                     var entry = info["dogNames"][i] + ": " + start + " -> " + end;
-                                    //var button = <button type="button" href="#" onclick="cancel()" class="btn btn-primary" >Cancel</button>;
-                                    document.getElementById("bookings").outerHTML += "<p align=\"middle\">" + entry + "</p>";
+                                    var bookId = bookinfo["_id"]["$oid"];
+                                    var but = "<button type=\"button\" href=\"#\" onclick=\"cancel(";
+                                    var ton = ")\" class=\"btn btn-primary\" >Cancel</button>";
+                                    var button =  but + bookId + ton;
+                                    document.getElementById("bookings").outerHTML += "<p align=\"left\">" + entry + button + "</p>";
                                 }
                              },
                              error: function(ts) {
@@ -189,10 +192,9 @@
 
     <font size="7"><p align="center" id="profile_name"></p></font>
     <font size="5"><p align="center" id="description"></p></font>
-    <img src="img/cartoonDog.jpg" style="float: left; width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
     <img src="img/cartoonDog.jpg" style="float: right; width: 25%; height: 25%" alt="Rent-a-Pup logo"/>
-    <font size="3"><p align="center">Bookings: </p></font>
-    <font size="3"><p align="center" id="bookings"></p></font>
+    <font size="3"><p align="left">Bookings: </p></font>
+    <font size="3"><p align="left" id="bookings"></p></font>
 </div>
 
 
