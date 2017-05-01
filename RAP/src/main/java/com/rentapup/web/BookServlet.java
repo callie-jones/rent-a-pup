@@ -46,7 +46,7 @@ public class BookServlet extends HttpServlet {
         response.setContentType("text");
 
         //addBooking
-        if(query.get("qType") == "addBooking") {
+        if(query.get("qType").equals("addBooking")) {
             mapper.writeValue(response.getOutputStream(), QueryHelper.addBooking(bookCol, dogCol, userCol, query.get("start"), query.get("end"), query.get("dog"), query.get("user")));
         }
         //cancelBooking
