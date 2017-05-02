@@ -25,7 +25,7 @@
 
         function book(){
 				var user = document.getElementById('user').value;
-				var billing = document.getElementById('billing').value;
+				var billing = "bill"; //document.getElementById('billing').value;
 				//var date = document.getElementById('date').value;
 				var start = document.getElementById('start').value;
 				var end = document.getElementById('end').value;
